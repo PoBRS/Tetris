@@ -5,7 +5,7 @@ public class Tetrimino
 
 	private Block[] blocks;
 
-	public Tetrimino(EnumShape shape)
+	public Tetrimino(EnumShape shape, Case[][] gameGrid)
 	{
 
 	}

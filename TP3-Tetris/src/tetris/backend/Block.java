@@ -5,7 +5,6 @@ public class Block
 
 	private int posX = 0;
 	private int posY = 0;
-	private boolean filled = false;
 	private boolean pivot = false;
 	private boolean fixed = false;
 
@@ -58,16 +57,6 @@ public class Block
 	public void setFixed(boolean fixed)
 	{
 		this.fixed = fixed;
-	}
-
-	public boolean isFilled()
-	{
-		return filled;
-	}
-
-	public void changeFilled()
-	{
-		this.filled = !this.filled;
 	}
 
 }

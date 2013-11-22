@@ -22,7 +22,8 @@ public class TetriminoTests
 	@Test
 	public void MoveLeftTest()
 	{
-
+		Tetrimino tetriminoToMove = new Tetrimino;
+		
 	}
 
 	@Test
