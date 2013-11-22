@@ -3,8 +3,8 @@ package tetris.backend;
 public class Case
 {
 	private Block block;
-	private int posX;
-	private int posY;
+	private int posX = 0;
+	private int posY = 0;
 
 	public Case(int posX, int posY)
 	{
@@ -21,5 +21,18 @@ public class Case
 	public void setBlock(Block block)
 	{
 		this.block = block;
+	}
+
+	public void Print()
+	{
+		if (this.block == null)
+		{
+			System.out.print(" ");
+		}
+
+		else
+		{
+			System.out.print("X");
+		}
 	}
 }
