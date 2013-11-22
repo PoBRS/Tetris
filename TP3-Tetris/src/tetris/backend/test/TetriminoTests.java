@@ -4,34 +4,55 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class TetriminoTests {
+public class TetriminoTests
+{
 
 	@Test
-	public void test() {
+	public void test()
+	{
 		fail("Not yet implemented");
 	}
-	
+
 	@Test
 	public void TetriminoTest()
 	{
-		//Spawn
-	}
-	
-	@Test
-	public void MoveTest()
-	{
-		
-		//Bas (Selon le timer tick)
 
-		//Gauche (Selon la flèche pesée. Accélère pendant le hold)
-		
-		//Droite (Selon la flèche pesée. Accélère pendant le hold)
 	}
-	
+
 	@Test
-	public void RotateTest()
+	public void MoveLeftTest()
 	{
-		//Algo selon pivot
+
 	}
-	
+
+	@Test
+	public void MoveRightTest()
+	{
+
+	}
+
+	@Test
+	public void MoveDownTest()
+	{
+
+	}
+
+	@Test
+	public void Rotate()
+	{
+
+	}
+
+	@Test
+	private void Deactivate()
+	{
+
+	}
+
+	@Test
+	public void getBlocks()
+	{
+
+	}
+
 }
