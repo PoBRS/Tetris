@@ -1,46 +1,47 @@
+
 package tetris.backend;
 
 public class Tetrimino
 {
 
-	private Block[] blocks;
+    private Block[] blocks;
 
-	public Tetrimino(EnumShape shape, Case[][] gameGrid)
-	{
+    public Tetrimino(EnumShape shape, Case[][] gameGrid)
+    {
 
-	}
+    }
 
-	public void MoveLeft()
-	{
-		// Gauche (Selon la flèche pesée. Accélère pendant le hold)
-	}
+    public void MoveLeft()
+    {
+	// Gauche (Selon la flèche pesée. Accélère pendant le hold)
+    }
 
-	public void MoveRight()
-	{
-		// Droite (Selon la flèche pesée. Accélère pendant le hold)
-	}
+    public void MoveRight()
+    {
+	// Droite (Selon la flèche pesée. Accélère pendant le hold)
+    }
 
-	public boolean MoveDown()
-	{
-		// Bas (Selon le timer tick)
+    public boolean MoveDown()
+    {
+	// Bas (Selon le timer tick)
 
-		// Si le bloc ne peut plus descendre
-		return false;
-	}
+	// Si le bloc ne peut plus descendre
+	return false;
+    }
 
-	public void Rotate()
-	{
-		// Algo selon pivot
-	}
+    public void Rotate()
+    {
+	// Algo selon pivot
+    }
 
-	private boolean Deactivate()
-	{
-		return false;
-	}
+    private boolean Deactivate()
+    {
+	return false;
+    }
 
-	public Block[] getBlocks()
-	{
-		return blocks;
-	}
+    public Block[] getBlocks()
+    {
+	return this.blocks;
+    }
 
 }

@@ -1,28 +1,29 @@
+
 package tetris.backend;
 
 public class Game
 {
-	private Case gameGrid[][];
+    private Case gameGrid[][];
 
-	public Game(int nbCasesX, int nbCasesY)
+    public Game(int nbCasesX, int nbCasesY)
+    {
+	for (int i = 0; i < nbCasesX; i++)
 	{
-		for (int i = 0; i < nbCasesX; i++)
-		{
-			for (int j = 0; j < nbCasesY; j++)
-			{
-				gameGrid[i][j] = new Case(i, j);
-			}
-		}
+	    for (int j = 0; j < nbCasesY; j++)
+	    {
+		this.gameGrid[i][j] = new Case(i, j);
+	    }
 	}
+    }
 
-	public SpawnTetrimino()
-	{
-		Tetrimino tetrimino = new Tetrimino(null, gameGrid);
-	}
+    public void SpawnTetrimino()
+    {
+	Tetrimino tetrimino = new Tetrimino(null, this.gameGrid);
+    }
 
-	public void Pause()
-	{
+    public void Pause()
+    {
 
-	}
+    }
 
 }
