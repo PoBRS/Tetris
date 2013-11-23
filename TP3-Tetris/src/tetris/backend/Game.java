@@ -29,6 +29,8 @@ public class Game
 	public void SpawnTetrimino()
 	{
 		Tetrimino tetrimino = new Tetrimino(EnumShape.O, this.gameGrid);
+		tetrimino.MoveDown();
+		tetrimino.MoveDown();
 	}
 
 	public void Pause()

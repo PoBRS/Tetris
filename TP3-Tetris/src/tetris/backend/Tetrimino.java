@@ -45,21 +45,51 @@ public class Tetrimino
 		return newBlock;
 	}
 
+	private void SetNewPosition(int translateX, int translateY)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			Block blockToMove = blocks[i];
+			int blockPosXInit = blockToMove.getPosX();
+			int blockPosYInit = blockToMove.getPosY();
+			int blockPosXFinal = (blockPosXInit + translateX);
+			int blockPosYFinal = (blockPosYInit + translateY);
+
+			blocks[i].setPosX(blockPosXFinal);
+			blocks[i].setPosY(blockPosYFinal);
+
+			gameGrid[blockPosXInit][blockPosYInit].setBlock(null);
+		}
+		ChangePosOnGrid();
+	}
+
+	private void ChangePosOnGrid()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			Block blockToMove = blocks[i];
+			int blockPosXNew = blockToMove.getPosX();
+			int blockPosYNew = blockToMove.getPosY();
+			gameGrid[blockPosXNew][blockPosYNew].setBlock(blockToMove);
+		}
+	}
+
 	public void MoveLeft()
 	{
 		// Gauche (Selon la flèche pesée. Accélère pendant le hold)
-
+		this.SetNewPosition(-1, 0);
 	}
 
 	public void MoveRight()
 	{
 		// Droite (Selon la flèche pesée. Accélère pendant le hold)
+		this.SetNewPosition(1, 0);
 	}
 
 	public boolean MoveDown()
 	{
 		// Bas (Selon le timer tick)
-
+		this.SetNewPosition(0, 1);
 		// Si le bloc ne peut plus descendre
 		return false;
 	}
