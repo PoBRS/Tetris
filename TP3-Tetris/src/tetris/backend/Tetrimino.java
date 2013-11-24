@@ -2,6 +2,10 @@ package tetris.backend;
 
 public class Tetrimino
 {
+	final static int FIRST_LINE = 0;
+	final static int LAST_LINE = 23;
+	final static int FIRST_COLUMN = 0;
+	final static int LAST_COLUMN = 9;
 
 	private Block[] blocks;
 	private Case[][] gameGrid;
@@ -78,57 +82,114 @@ public class Tetrimino
 	{
 		// Gauche (Selon la flèche pesée. Accélère pendant le hold)
 		boolean allowedMove = true;
+		int blockPosX;
+		int blockPosY;
+		int leftBlockPosX;
+		Block leftBlock;
+
 		for (int i = 0; i < 4; i++)
-		{ 
-			if (blocks[i].getPosX() == 0)
+		{
+			blockPosX = blocks[i].getPosX();
+			blockPosY = blocks[i].getPosY();
+
+			if (blockPosX == FIRST_COLUMN)
 			{
 				allowedMove = false;
+			} else
+			{
+				leftBlockPosX = blocks[i].getPosX() - 1;
+				leftBlock = this.gameGrid[leftBlockPosX][blockPosY].getBlock();
+
+				if (leftBlock != null && leftBlock.isFixed())
+				{
+					allowedMove = false;
+				}
 			}
 		}
-		
+
 		if (allowedMove)
-			{
+		{
 			this.SetNewPosition(-1, 0);
-			}
+		}
 	}
 
 	public void MoveRight()
 	{
 		// Droite (Selon la flèche pesée. Accélère pendant le hold)
 		boolean allowedMove = true;
+		int blockPosX;
+		int blockPosY;
+		int rightBlockPosX;
+		Block rightBlock;
+
 		for (int i = 0; i < 4; i++)
-		{ 
-			if (blocks[i].getPosX() == 9)
+		{
+			blockPosX = blocks[i].getPosX();
+			blockPosY = blocks[i].getPosY();
+
+			if (blockPosX == LAST_COLUMN)
 			{
 				allowedMove = false;
+			} else
+			{
+				rightBlockPosX = blocks[i].getPosX() + 1;
+				rightBlock = this.gameGrid[rightBlockPosX][blockPosY].getBlock();
+
+				if (rightBlock != null && rightBlock.isFixed())
+				{
+					allowedMove = false;
+				}
 			}
 		}
-		
+
 		if (allowedMove)
-			{
+		{
 			this.SetNewPosition(1, 0);
-			}
-		
+		}
+
 	}
 
 	public boolean MoveDown()
 	{
-		// Bas (Selon le timer tick)
 		boolean allowedMove = true;
+
+		int blockPosY;
+		int blockPosX;
+		int blockPosYInferior;
+		Block inferiorBlock;
+
 		for (int i = 0; i < 4; i++)
-		{ 
-			if (blocks[i].getPosY() == 23)
+		{
+
+			blockPosY = blocks[i].getPosY();
+			blockPosX = blocks[i].getPosX();
+
+			// A block is on the last line.
+			if (blockPosY == LAST_LINE)
 			{
 				allowedMove = false;
-			}
-		}
-		
-		if (allowedMove)
+			} else
 			{
-			this.SetNewPosition(0, 1);
-			}
-		return allowedMove;
 
+				// A block is on top of another fixed block. If a block is in
+				// movement(in the current tetrimino), the block will still
+				// fall.
+				blockPosYInferior = blocks[i].getPosY() + 1;
+				inferiorBlock = this.gameGrid[blockPosX][blockPosYInferior].getBlock();
+
+				if (inferiorBlock != null && inferiorBlock.isFixed())
+				{
+					allowedMove = false;
+				}
+			}
+
+		}
+
+		if (allowedMove)
+		{
+			this.SetNewPosition(0, 1);
+		}
+		return allowedMove;
 
 	}
 
@@ -137,9 +198,12 @@ public class Tetrimino
 		// Algo selon pivot
 	}
 
-	private boolean Deactivate()
+	public void Deactivate()
 	{
-		return false;
+		for (int i = 0; i < 4; i++)
+		{
+			blocks[i].setFixed(true);
+		}
 	}
 
 	public Block[] getBlocks()

@@ -7,8 +7,6 @@ public class Game
 	private final static int NBCASES_X = 10;
 	private final static int NBCASES_Y = 24;
 	private Tetrimino currentTetrimino;
-	
-
 
 	public Game()
 	{
@@ -24,17 +22,19 @@ public class Game
 
 	}
 
-	
 	public void SpawnTetrimino()
 	{
+		if (this.currentTetrimino != null)
+		{
+			this.currentTetrimino.Deactivate();
+		}
 		this.currentTetrimino = new Tetrimino(EnumShape.O, this.gameGrid);
 	}
-	
-	public Tetrimino getCurrentTetrimino() {
-		this.PrintGame();
+
+	public Tetrimino getCurrentTetrimino()
+	{
 		return currentTetrimino;
 	}
-
 
 	public void Pause()
 	{
@@ -52,8 +52,9 @@ public class Game
 			System.out.println();
 		}
 	}
-	
-	public Case[][] getGameGrid() {
+
+	public Case[][] getGameGrid()
+	{
 		return gameGrid;
 	}
 
