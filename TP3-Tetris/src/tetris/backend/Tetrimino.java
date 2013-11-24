@@ -18,16 +18,40 @@ public class Tetrimino
 		switch (shape)
 		{
 		case I:
+			blocks[0] = CreateBlock(4, 0, false);
+			blocks[0] = CreateBlock(4, 1, true); // not so sure
+			blocks[0] = CreateBlock(4, 2, false);
+			blocks[0] = CreateBlock(4, 3, false);
 			break;
 		case S:
+			blocks[0] = CreateBlock(6, 2, false);
+			blocks[0] = CreateBlock(5, 2, false);
+			blocks[0] = CreateBlock(5, 3, true); // not so sure
+			blocks[0] = CreateBlock(4, 3, false);
 			break;
 		case Z:
+			blocks[0] = CreateBlock(4, 2, false);
+			blocks[0] = CreateBlock(5, 2, true); // not so sure
+			blocks[0] = CreateBlock(5, 3, false);
+			blocks[0] = CreateBlock(6, 3, false);
 			break;
 		case T:
+			blocks[0] = CreateBlock(5, 1, false);
+			blocks[1] = CreateBlock(5, 2, true);
+			blocks[2] = CreateBlock(5, 3, false);
+			blocks[3] = CreateBlock(4, 2, false);
 			break;
 		case L:
+			blocks[0] = CreateBlock(4, 1, false);
+			blocks[1] = CreateBlock(4, 2, true);
+			blocks[2] = CreateBlock(4, 3, false);
+			blocks[3] = CreateBlock(5, 3, false);
 			break;
 		case J:
+			blocks[0] = CreateBlock(5, 1, false);
+			blocks[1] = CreateBlock(5, 2, true);
+			blocks[2] = CreateBlock(5, 3, false);
+			blocks[3] = CreateBlock(4, 3, false);
 			break;
 		case O:
 			// 4,5 X
@@ -196,6 +220,54 @@ public class Tetrimino
 	public void Rotate()
 	{
 		// Algo selon pivot
+		Block pivotBlock = this.getPivotBlock();
+		if (pivotBlock != null)
+		{
+			int pivotX = pivotBlock.getPosX();
+			int pivotY = pivotBlock.getPosY();
+
+			for (Block blockToRotate : this.blocks)
+			{
+				int relativeXToPivot = blockToRotate.getPosX() - pivotX;
+				int relativeYToPivot = blockToRotate.getPosY() - pivotY;
+
+				int newPointXRelativeToPivot = -relativeYToPivot; // the magic
+																	// of
+																	// rotation.
+																	// The point
+																	// x is the
+																	// negative
+																	// old point
+																	// y.
+				int newPointYRelativeToPivot = relativeXToPivot; // And the new
+																	// y is the
+																	// old x.
+
+				blockToRotate.setPosX(pivotX + newPointXRelativeToPivot);
+				blockToRotate.setPosY(pivotY + newPointYRelativeToPivot);
+
+				this.ChangePosOnGrid();
+			}
+		}
+
+	}
+
+	/**
+	 * Fonction qui retourne le block du tetrimino représentant le pivot.
+	 * 
+	 * @return le block pivot.
+	 */
+	private Block getPivotBlock()
+	{
+		for (Block block : this.blocks)
+		{
+			if (block.isPivot())
+			{
+				return block;
+			}
+		}
+
+		return null;
 	}
 
 	public void Deactivate()

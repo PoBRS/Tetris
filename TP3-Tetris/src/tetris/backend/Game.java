@@ -36,11 +36,6 @@ public class Game
 		return currentTetrimino;
 	}
 
-	public void Pause()
-	{
-
-	}
-
 	public void PrintGame()
 	{
 		for (int y = 0; y < NBCASES_Y; y++)
