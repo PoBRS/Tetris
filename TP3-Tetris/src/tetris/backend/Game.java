@@ -3,13 +3,12 @@ package tetris.backend;
 public class Game
 {
 	private Case gameGrid[][];
+
 	private final static int NBCASES_X = 10;
 	private final static int NBCASES_Y = 24;
+	private Tetrimino currentTetrimino;
+	
 
-	public static void main(String[] args)
-	{
-		Game game = new Game();
-	}
 
 	public Game()
 	{
@@ -22,16 +21,20 @@ public class Game
 			}
 
 		}
-		SpawnTetrimino();
-		PrintGame();
+
 	}
 
+	
 	public void SpawnTetrimino()
 	{
-		Tetrimino tetrimino = new Tetrimino(EnumShape.O, this.gameGrid);
-		tetrimino.MoveDown();
-		tetrimino.MoveDown();
+		this.currentTetrimino = new Tetrimino(EnumShape.O, this.gameGrid);
 	}
+	
+	public Tetrimino getCurrentTetrimino() {
+		this.PrintGame();
+		return currentTetrimino;
+	}
+
 
 	public void Pause()
 	{
@@ -49,4 +52,9 @@ public class Game
 			System.out.println();
 		}
 	}
+	
+	public Case[][] getGameGrid() {
+		return gameGrid;
+	}
+
 }

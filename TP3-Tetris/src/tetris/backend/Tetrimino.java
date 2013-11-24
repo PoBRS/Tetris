@@ -77,21 +77,59 @@ public class Tetrimino
 	public void MoveLeft()
 	{
 		// Gauche (Selon la flèche pesée. Accélère pendant le hold)
-		this.SetNewPosition(-1, 0);
+		boolean allowedMove = true;
+		for (int i = 0; i < 4; i++)
+		{ 
+			if (blocks[i].getPosX() == 0)
+			{
+				allowedMove = false;
+			}
+		}
+		
+		if (allowedMove)
+			{
+			this.SetNewPosition(-1, 0);
+			}
 	}
 
 	public void MoveRight()
 	{
 		// Droite (Selon la flèche pesée. Accélère pendant le hold)
-		this.SetNewPosition(1, 0);
+		boolean allowedMove = true;
+		for (int i = 0; i < 4; i++)
+		{ 
+			if (blocks[i].getPosX() == 9)
+			{
+				allowedMove = false;
+			}
+		}
+		
+		if (allowedMove)
+			{
+			this.SetNewPosition(1, 0);
+			}
+		
 	}
 
 	public boolean MoveDown()
 	{
 		// Bas (Selon le timer tick)
-		this.SetNewPosition(0, 1);
-		// Si le bloc ne peut plus descendre
-		return false;
+		boolean allowedMove = true;
+		for (int i = 0; i < 4; i++)
+		{ 
+			if (blocks[i].getPosY() == 23)
+			{
+				allowedMove = false;
+			}
+		}
+		
+		if (allowedMove)
+			{
+			this.SetNewPosition(0, 1);
+			}
+		return allowedMove;
+
+
 	}
 
 	public void Rotate()

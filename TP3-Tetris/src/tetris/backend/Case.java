@@ -1,7 +1,9 @@
 package tetris.backend;
 
+
 public class Case
 {
+	private CaseListener caseListener;
 	private Block block;
 	private int posX = 0;
 	private int posY = 0;
@@ -21,6 +23,10 @@ public class Case
 	public void setBlock(Block block)
 	{
 		this.block = block;
+		if (this.caseListener != null)
+		{
+			this.caseListener.onStateChanged();
+		}
 	}
 
 	public void Print()
@@ -34,5 +40,8 @@ public class Case
 		{
 			System.out.print("X");
 		}
+	}
+	public void setBlockListener(CaseListener caseListener) {
+		this.caseListener = caseListener;
 	}
 }
