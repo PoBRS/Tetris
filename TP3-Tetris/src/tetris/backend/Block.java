@@ -7,9 +7,10 @@ public class Block
 	private int posY = 0;
 	private boolean pivot = false;
 	private boolean fixed = false;
-	
+
 	public Block(int posX, int posY, boolean pivot)
 	{
+		this.pivot = pivot;
 		this.setPosX(posX);
 		this.setPosY(posY);
 

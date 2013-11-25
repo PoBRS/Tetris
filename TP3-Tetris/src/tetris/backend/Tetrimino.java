@@ -19,21 +19,21 @@ public class Tetrimino
 		{
 		case I:
 			blocks[0] = CreateBlock(4, 0, false);
-			blocks[0] = CreateBlock(4, 1, true); // not so sure
-			blocks[0] = CreateBlock(4, 2, false);
-			blocks[0] = CreateBlock(4, 3, false);
+			blocks[1] = CreateBlock(4, 1, true); // not so sure
+			blocks[2] = CreateBlock(4, 2, false);
+			blocks[3] = CreateBlock(4, 3, false);
 			break;
 		case S:
 			blocks[0] = CreateBlock(6, 2, false);
-			blocks[0] = CreateBlock(5, 2, false);
-			blocks[0] = CreateBlock(5, 3, true); // not so sure
-			blocks[0] = CreateBlock(4, 3, false);
+			blocks[1] = CreateBlock(5, 2, false);
+			blocks[2] = CreateBlock(5, 3, true); // not so sure
+			blocks[3] = CreateBlock(4, 3, false);
 			break;
 		case Z:
 			blocks[0] = CreateBlock(4, 2, false);
-			blocks[0] = CreateBlock(5, 2, true); // not so sure
-			blocks[0] = CreateBlock(5, 3, false);
-			blocks[0] = CreateBlock(6, 3, false);
+			blocks[1] = CreateBlock(5, 2, true); // not so sure
+			blocks[2] = CreateBlock(5, 3, false);
+			blocks[3] = CreateBlock(6, 3, false);
 			break;
 		case T:
 			blocks[0] = CreateBlock(5, 1, false);
@@ -73,7 +73,7 @@ public class Tetrimino
 		return newBlock;
 	}
 
-	private void SetNewPosition(int translateX, int translateY)
+	private void SetNewPositionTranslate(int translateX, int translateY)
 	{
 		for (int i = 0; i < 4; i++)
 		{
@@ -119,7 +119,8 @@ public class Tetrimino
 			if (blockPosX == FIRST_COLUMN)
 			{
 				allowedMove = false;
-			} else
+			}
+			else
 			{
 				leftBlockPosX = blocks[i].getPosX() - 1;
 				leftBlock = this.gameGrid[leftBlockPosX][blockPosY].getBlock();
@@ -133,7 +134,7 @@ public class Tetrimino
 
 		if (allowedMove)
 		{
-			this.SetNewPosition(-1, 0);
+			this.SetNewPositionTranslate(-1, 0);
 		}
 	}
 
@@ -154,7 +155,8 @@ public class Tetrimino
 			if (blockPosX == LAST_COLUMN)
 			{
 				allowedMove = false;
-			} else
+			}
+			else
 			{
 				rightBlockPosX = blocks[i].getPosX() + 1;
 				rightBlock = this.gameGrid[rightBlockPosX][blockPosY].getBlock();
@@ -168,7 +170,7 @@ public class Tetrimino
 
 		if (allowedMove)
 		{
-			this.SetNewPosition(1, 0);
+			this.SetNewPositionTranslate(1, 0);
 		}
 
 	}
@@ -192,7 +194,8 @@ public class Tetrimino
 			if (blockPosY == LAST_LINE)
 			{
 				allowedMove = false;
-			} else
+			}
+			else
 			{
 
 				// A block is on top of another fixed block. If a block is in
@@ -211,7 +214,7 @@ public class Tetrimino
 
 		if (allowedMove)
 		{
-			this.SetNewPosition(0, 1);
+			this.SetNewPositionTranslate(0, 1);
 		}
 		return allowedMove;
 
@@ -228,20 +231,16 @@ public class Tetrimino
 
 			for (Block blockToRotate : this.blocks)
 			{
+				int blockToRotatePosX = blockToRotate.getPosX();
+				int blockToRotatePosY = blockToRotate.getPosY();
+				gameGrid[blockToRotatePosX][blockToRotatePosY].setBlock(null);
 				int relativeXToPivot = blockToRotate.getPosX() - pivotX;
 				int relativeYToPivot = blockToRotate.getPosY() - pivotY;
 
-				int newPointXRelativeToPivot = -relativeYToPivot; // the magic
-																	// of
-																	// rotation.
-																	// The point
-																	// x is the
-																	// negative
-																	// old point
-																	// y.
-				int newPointYRelativeToPivot = relativeXToPivot; // And the new
-																	// y is the
-																	// old x.
+				// The point x is the negative old point y.
+				int newPointXRelativeToPivot = -relativeYToPivot;
+				// And the new y is the old x.
+				int newPointYRelativeToPivot = relativeXToPivot;
 
 				blockToRotate.setPosX(pivotX + newPointXRelativeToPivot);
 				blockToRotate.setPosY(pivotY + newPointYRelativeToPivot);

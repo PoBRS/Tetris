@@ -1,6 +1,5 @@
 package tetris.backend;
 
-
 public class Case
 {
 	private CaseListener caseListener;
@@ -41,7 +40,9 @@ public class Case
 			System.out.print("X");
 		}
 	}
-	public void setBlockListener(CaseListener caseListener) {
+
+	public void setBlockListener(CaseListener caseListener)
+	{
 		this.caseListener = caseListener;
 	}
 }

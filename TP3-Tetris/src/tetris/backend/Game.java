@@ -1,5 +1,10 @@
 package tetris.backend;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class Game
 {
 	private Case gameGrid[][];
@@ -7,10 +12,17 @@ public class Game
 	private final static int NBCASES_X = 10;
 	private final static int NBCASES_Y = 24;
 	private Tetrimino currentTetrimino;
+	private EnumShape next;
+
+	private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
+	private static final int SIZE = VALUES.size();
+	private static final Random RANDOM = new Random();
 
 	public Game()
 	{
 		this.gameGrid = new Case[NBCASES_X][NBCASES_Y];
+		this.next = VALUES.get(RANDOM.nextInt(SIZE));
+
 		for (int i = 0; i < NBCASES_X; i++)
 		{
 			for (int j = 0; j < NBCASES_Y; j++)
@@ -24,11 +36,13 @@ public class Game
 
 	public void SpawnTetrimino()
 	{
+
 		if (this.currentTetrimino != null)
 		{
 			this.currentTetrimino.Deactivate();
 		}
-		this.currentTetrimino = new Tetrimino(EnumShape.O, this.gameGrid);
+		this.currentTetrimino = new Tetrimino(next, this.gameGrid);
+		this.next = VALUES.get(RANDOM.nextInt(SIZE));
 	}
 
 	public Tetrimino getCurrentTetrimino()

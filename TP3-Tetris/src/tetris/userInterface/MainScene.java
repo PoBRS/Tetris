@@ -64,12 +64,22 @@ public class MainScene extends Scene
 
 				}
 
+				if (key.getCode() == KeyCode.UP)
+				{
+					if (MainScene.this.chronometer.isActive())
+					{
+						MainScene.this.currentGame.getCurrentTetrimino().Rotate();
+					}
+
+				}
+
 				if (key.getCode() == KeyCode.ENTER)
 				{
 					if (MainScene.this.chronometer.isActive())
 					{
 						MainScene.this.chronometer.arreterChronometre();
-					} else
+					}
+					else
 					{
 						MainScene.this.chronometer.lancerChronometre();
 					}
