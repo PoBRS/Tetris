@@ -45,7 +45,6 @@ public class MainScene extends Scene
 	}
 	this.currentGame.SpawnTetrimino();
 	hud.setCenter(gameGrid);
-	hud.setRight(new Score(root));
 
 	String linkTetrisA = new File("ressources/TetrisA.mp3").toURI().toString();
 	Runnable musicRunnable = new MusicPlayer(linkTetrisA);
