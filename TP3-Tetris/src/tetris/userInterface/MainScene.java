@@ -17,6 +17,8 @@ public class MainScene extends Scene
 	private Game currentGame;
 
 	private Chronometer chronometer;
+	private AudioClip spin;
+	private AudioClip tetrisA;
 
 	public MainScene(Stage primaryStage, Group root)
 	{
@@ -38,6 +40,13 @@ public class MainScene extends Scene
 		}
 		this.currentGame.SpawnTetrimino();
 		hud.setCenter(gameGrid);
+
+		String linkTetrisA = new File("ressources/TetrisA.mp3").toURI().toString();
+		this.tetrisA = new AudioClip(linkTetrisA);
+
+		String linkSpin = new File("ressources/Spin.mp3").toURI().toString();
+		this.spin = new AudioClip(linkSpin);
+
 		this.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 			public void handle(KeyEvent key)
@@ -73,6 +82,7 @@ public class MainScene extends Scene
 					if (MainScene.this.chronometer.isActive())
 					{
 						MainScene.this.currentGame.getCurrentTetrimino().RotateCallManager();
+						MainScene.this.spin.play();
 					}
 
 				}
@@ -97,11 +107,9 @@ public class MainScene extends Scene
 				}
 			}
 		});
+		MainScene.this.tetrisA.play();
 		this.chronometer.startChronometer();
 
-		String lien = new File("ressources/Hurry.mp3").toURI().toString();
-		AudioClip music = new AudioClip(lien);
-		music.play();
 	}
 
 	// gameGrid.add(new BlockGraphics(), 8, 18);
