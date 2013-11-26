@@ -18,6 +18,9 @@ public class MainScene extends Scene
 
 	private Chronometer chronometer;
 	private AudioClip spin;
+	private AudioClip beep;
+	private AudioClip crash;
+
 	private AudioClip tetrisA;
 
 	public MainScene(Stage primaryStage, Group root)
@@ -26,6 +29,7 @@ public class MainScene extends Scene
 
 		this.currentGame = new Game();
 		HUD hud = new HUD(root);
+
 		Grid gameGrid = new Grid(root);
 
 		Case[][] matchingCase = this.currentGame.getGameGrid();
@@ -40,12 +44,19 @@ public class MainScene extends Scene
 		}
 		this.currentGame.SpawnTetrimino();
 		hud.setCenter(gameGrid);
+		hud.setRight(new Score(root));
 
 		String linkTetrisA = new File("ressources/TetrisA.mp3").toURI().toString();
 		this.tetrisA = new AudioClip(linkTetrisA);
 
 		String linkSpin = new File("ressources/Spin.mp3").toURI().toString();
 		this.spin = new AudioClip(linkSpin);
+
+		String linkBeep = new File("ressources/Beep.mp3").toURI().toString();
+		this.beep = new AudioClip(linkBeep);
+
+		String linkCrash = new File("ressources/Crash.mp3").toURI().toString();
+		this.crash = new AudioClip(linkCrash);
 
 		this.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
@@ -56,6 +67,7 @@ public class MainScene extends Scene
 					if (MainScene.this.chronometer.isActive())
 					{
 						MainScene.this.currentGame.getCurrentTetrimino().MoveLeft();
+						MainScene.this.beep.play();
 					}
 				}
 
@@ -64,6 +76,7 @@ public class MainScene extends Scene
 					if (MainScene.this.chronometer.isActive())
 					{
 						MainScene.this.currentGame.getCurrentTetrimino().MoveRight();
+						MainScene.this.beep.play();
 					}
 				}
 
@@ -72,7 +85,6 @@ public class MainScene extends Scene
 					if (MainScene.this.chronometer.isActive())
 					{
 						MainScene.this.getCurrentGame().getCurrentTetrimino().MoveDown();
-
 					}
 
 				}
@@ -119,4 +131,8 @@ public class MainScene extends Scene
 		return this.currentGame;
 	}
 
+	public AudioClip getCrash()
+	{
+		return crash;
+	}
 }

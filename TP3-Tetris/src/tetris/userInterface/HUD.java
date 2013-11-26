@@ -20,7 +20,7 @@ public class HUD extends BorderPane
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setSpacing(10);
 		vbox.getChildren().addAll(placeHolder3, placeHolder4, placeHolder5);
-		this.setRight(vbox);
+
 		this.setLeft(placeHolder2);
 		this.setTop(placeHolder1);
 

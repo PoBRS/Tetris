@@ -1,5 +1,7 @@
 package tetris.backend;
 
+import javafx.scene.paint.Color;
+
 public class Tetromino
 {
 	final static int FIRST_LINE = 0;
@@ -18,57 +20,57 @@ public class Tetromino
 		switch (shape)
 		{
 		case I:
-			blocks[0] = CreateBlock(4, 0, false);
-			blocks[1] = CreateBlock(4, 1, false);
-			blocks[2] = CreateBlock(4, 2, false);
-			blocks[3] = CreateBlock(4, 3, false);
+			blocks[0] = CreateBlock(4, 0, false, Color.TURQUOISE);
+			blocks[1] = CreateBlock(4, 1, false, Color.TURQUOISE);
+			blocks[2] = CreateBlock(4, 2, false, Color.TURQUOISE);
+			blocks[3] = CreateBlock(4, 3, false, Color.TURQUOISE);
 			break;
 		case S:
-			blocks[0] = CreateBlock(6, 2, false);
-			blocks[1] = CreateBlock(5, 2, false);
-			blocks[2] = CreateBlock(5, 3, false);
-			blocks[3] = CreateBlock(4, 3, false);
+			blocks[0] = CreateBlock(6, 2, false, Color.GREEN);
+			blocks[1] = CreateBlock(5, 2, false, Color.GREEN);
+			blocks[2] = CreateBlock(5, 3, false, Color.GREEN);
+			blocks[3] = CreateBlock(4, 3, false, Color.GREEN);
 			break;
 		case Z:
-			blocks[0] = CreateBlock(4, 2, false);
-			blocks[1] = CreateBlock(5, 2, false);
-			blocks[2] = CreateBlock(5, 3, false);
-			blocks[3] = CreateBlock(6, 3, false);
+			blocks[0] = CreateBlock(4, 2, false, Color.RED);
+			blocks[1] = CreateBlock(5, 2, false, Color.RED);
+			blocks[2] = CreateBlock(5, 3, false, Color.RED);
+			blocks[3] = CreateBlock(6, 3, false, Color.RED);
 			break;
 		case T:
-			blocks[0] = CreateBlock(5, 1, false);
-			blocks[1] = CreateBlock(5, 2, true);
-			blocks[2] = CreateBlock(5, 3, false);
-			blocks[3] = CreateBlock(4, 2, false);
+			blocks[0] = CreateBlock(5, 1, false, Color.PURPLE);
+			blocks[1] = CreateBlock(5, 2, true, Color.PURPLE);
+			blocks[2] = CreateBlock(5, 3, false, Color.PURPLE);
+			blocks[3] = CreateBlock(4, 2, false, Color.PURPLE);
 			break;
 		case L:
-			blocks[0] = CreateBlock(4, 1, false);
-			blocks[1] = CreateBlock(4, 2, true);
-			blocks[2] = CreateBlock(4, 3, false);
-			blocks[3] = CreateBlock(5, 3, false);
+			blocks[0] = CreateBlock(4, 1, false, Color.ORANGE);
+			blocks[1] = CreateBlock(4, 2, true, Color.ORANGE);
+			blocks[2] = CreateBlock(4, 3, false, Color.ORANGE);
+			blocks[3] = CreateBlock(5, 3, false, Color.ORANGE);
 			break;
 		case J:
-			blocks[0] = CreateBlock(5, 1, false);
-			blocks[1] = CreateBlock(5, 2, true);
-			blocks[2] = CreateBlock(5, 3, false);
-			blocks[3] = CreateBlock(4, 3, false);
+			blocks[0] = CreateBlock(5, 1, false, Color.BLUE);
+			blocks[1] = CreateBlock(5, 2, true, Color.BLUE);
+			blocks[2] = CreateBlock(5, 3, false, Color.BLUE);
+			blocks[3] = CreateBlock(4, 3, false, Color.BLUE);
 			break;
 		case O:
 			// 4,5 X
 			// 2,3 Y
 
-			blocks[0] = CreateBlock(4, 2, false);
-			blocks[1] = CreateBlock(4, 3, false);
-			blocks[2] = CreateBlock(5, 2, false);
-			blocks[3] = CreateBlock(5, 3, false);
+			blocks[0] = CreateBlock(4, 2, false, Color.YELLOW);
+			blocks[1] = CreateBlock(4, 3, false, Color.YELLOW);
+			blocks[2] = CreateBlock(5, 2, false, Color.YELLOW);
+			blocks[3] = CreateBlock(5, 3, false, Color.YELLOW);
 
 			break;
 		}
 	}
 
-	private Block CreateBlock(int x, int y, boolean pivot)
+	private Block CreateBlock(int x, int y, boolean pivot, Color colorBlock)
 	{
-		Block newBlock = new Block(x, y, pivot);
+		Block newBlock = new Block(x, y, pivot, colorBlock);
 		gameGrid[x][y].setBlock(newBlock);
 		return newBlock;
 	}

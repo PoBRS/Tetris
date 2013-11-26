@@ -1,5 +1,7 @@
 package tetris.backend;
 
+import javafx.scene.paint.Color;
+
 public class Block
 {
 
@@ -7,13 +9,14 @@ public class Block
 	private int posY = 0;
 	private boolean pivot = false;
 	private boolean fixed = false;
+	private Color colorBlock;
 
-	public Block(int posX, int posY, boolean pivot)
+	public Block(int posX, int posY, boolean pivot, Color colorBlock)
 	{
 		this.pivot = pivot;
 		this.setPosX(posX);
 		this.setPosY(posY);
-
+		this.colorBlock = colorBlock;
 	}
 
 	public int getPosY()
@@ -69,5 +72,15 @@ public class Block
 	public void setFixed(boolean fixed)
 	{
 		this.fixed = fixed;
+	}
+
+	public Color getColorBlock()
+	{
+		return colorBlock;
+	}
+
+	public void setColorBlock(Color colorBlock)
+	{
+		this.colorBlock = colorBlock;
 	}
 }

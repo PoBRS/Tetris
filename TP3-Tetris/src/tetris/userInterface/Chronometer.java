@@ -4,14 +4,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.util.Duration;
 
 public class Chronometer
 {
 	private Timeline timelineInGame;
 	private boolean active = false;
-	private Scene mainScene;
+	private MainScene mainScene;
 
 	public Chronometer(final MainScene mainScene)
 	{
@@ -22,8 +21,23 @@ public class Chronometer
 			@Override
 			public void handle(ActionEvent event)
 			{
+				Chronometer.this.resetTimer(800);
+			}
+		}));
+
+		this.timelineInGame.setCycleCount(Timeline.INDEFINITE);
+	}
+
+	public void resetTimer(final double timerInterval)
+	{
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(timerInterval), new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
 				if (!mainScene.getCurrentGame().getCurrentTetrimino().MoveDown())
 				{
+					Chronometer.this.mainScene.getCrash().play();
 
 					if (mainScene.getCurrentGame().LostGame())
 					{
@@ -41,9 +55,10 @@ public class Chronometer
 					mainScene.getCurrentGame().SpawnTetrimino();
 				}
 			}
-		}));
-
-		this.timelineInGame.setCycleCount(Timeline.INDEFINITE);
+		});
+		this.timelineInGame.stop();
+		this.timelineInGame.getKeyFrames().setAll(keyFrame);
+		this.timelineInGame.play();
 	}
 
 	public void stopChronometer()
