@@ -11,7 +11,8 @@ public class Game
 
 	private final static int NBCASES_X = 10;
 	private final static int NBCASES_Y = 24;
-	private Tetromino currentTetrimino;
+	private final static int NBCASES_Y_JEU = 20;
+	private Tetromino currentTetromino;
 	private EnumShape next;
 
 	private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
@@ -37,17 +38,69 @@ public class Game
 	public void SpawnTetrimino()
 	{
 
-		if (this.currentTetrimino != null)
+		if (this.currentTetromino != null)
 		{
-			this.currentTetrimino.Deactivate();
+			this.currentTetromino.Deactivate();
 		}
-		this.currentTetrimino = new Tetromino(EnumShape.Z, this.gameGrid);
+		this.currentTetromino = new Tetromino(next, this.gameGrid);
 		this.next = VALUES.get(RANDOM.nextInt(SIZE));
+	}
+
+	public boolean CheckLineIsComplete(int line)
+	{
+		int nbFilledCases = 0;
+		for (int x = 0; x < Game.NBCASES_X; x++)
+		{
+			if (this.gameGrid[x][line].getBlock() != null)
+			{
+				nbFilledCases++;
+			}
+		}
+
+		if (nbFilledCases == 10)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public void ClearLine(int line)
+	{
+		for (int column = 0; column < 10; column++)
+		{
+			this.gameGrid[column][line].setBlock(null);
+		}
+
+		for (int y = line; y > 0; y--)
+		{
+			for (int x = 0; x < Game.NBCASES_X; x++)
+			{
+				this.gameGrid[x][y].setBlock(this.gameGrid[x][y - 1].getBlock());
+			}
+		}
+	}
+
+	public boolean LostGame()
+	{
+		for (int y = 3; y >= 0; y--)
+		{
+			for (int x = 0; x < Game.NBCASES_X; x++)
+			{
+				if (this.gameGrid[x][y].getBlock() != null)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Tetromino getCurrentTetrimino()
 	{
-		return currentTetrimino;
+		return currentTetromino;
 	}
 
 	public void PrintGame()

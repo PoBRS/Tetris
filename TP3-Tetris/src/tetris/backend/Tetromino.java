@@ -19,19 +19,19 @@ public class Tetromino
 		{
 		case I:
 			blocks[0] = CreateBlock(4, 0, false);
-			blocks[1] = CreateBlock(4, 1, false); // not so sure
+			blocks[1] = CreateBlock(4, 1, false);
 			blocks[2] = CreateBlock(4, 2, false);
 			blocks[3] = CreateBlock(4, 3, false);
 			break;
 		case S:
 			blocks[0] = CreateBlock(6, 2, false);
 			blocks[1] = CreateBlock(5, 2, false);
-			blocks[2] = CreateBlock(5, 3, false); // not so sure
+			blocks[2] = CreateBlock(5, 3, false);
 			blocks[3] = CreateBlock(4, 3, false);
 			break;
 		case Z:
 			blocks[0] = CreateBlock(4, 2, false);
-			blocks[1] = CreateBlock(5, 2, false); // not so sure
+			blocks[1] = CreateBlock(5, 2, false);
 			blocks[2] = CreateBlock(5, 3, false);
 			blocks[3] = CreateBlock(6, 3, false);
 			break;
@@ -136,6 +136,21 @@ public class Tetromino
 		{
 			this.SetNewPositionTranslate(-1, 0);
 		}
+	}
+
+	public int findLandingPosY()
+	{
+		int tetrominoLandingCase = 0;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (this.blocks[i].getPosY() > tetrominoLandingCase)
+			{
+				tetrominoLandingCase = this.blocks[i].getPosY();
+			}
+		}
+
+		return tetrominoLandingCase;
 	}
 
 	public void MoveRight()

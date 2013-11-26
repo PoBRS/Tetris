@@ -16,13 +16,28 @@ public class Chronometer
 	public Chronometer(final MainScene mainScene)
 	{
 		this.mainScene = mainScene;
-		this.timelineInGame = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>()
+		this.timelineInGame = new Timeline(new KeyFrame(Duration.millis(800), new EventHandler<ActionEvent>()
 		{
+
 			@Override
 			public void handle(ActionEvent event)
 			{
 				if (!mainScene.getCurrentGame().getCurrentTetrimino().MoveDown())
 				{
+
+					if (mainScene.getCurrentGame().LostGame())
+					{
+						Chronometer.this.stopChronometer();
+					}
+
+					int lineToCheck = mainScene.getCurrentGame().getCurrentTetrimino().findLandingPosY();
+					for (int i = lineToCheck - 3; i <= lineToCheck; i++)
+					{
+						if (mainScene.getCurrentGame().CheckLineIsComplete(i))
+						{
+							mainScene.getCurrentGame().ClearLine(i);
+						}
+					}
 					mainScene.getCurrentGame().SpawnTetrimino();
 				}
 			}
@@ -31,14 +46,14 @@ public class Chronometer
 		this.timelineInGame.setCycleCount(Timeline.INDEFINITE);
 	}
 
-	public void arreterChronometre()
+	public void stopChronometer()
 	{
 		this.timelineInGame.stop();
 		this.active = false;
 
 	}
 
-	public void lancerChronometre()
+	public void startChronometer()
 	{
 		this.timelineInGame.play();
 		this.active = true;

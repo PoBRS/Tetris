@@ -1,10 +1,13 @@
 package tetris.userInterface;
 
+import java.io.File;
+
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import tetris.backend.Case;
 import tetris.backend.Game;
@@ -12,6 +15,7 @@ import tetris.backend.Game;
 public class MainScene extends Scene
 {
 	private Game currentGame;
+
 	private Chronometer chronometer;
 
 	public MainScene(Stage primaryStage, Group root)
@@ -19,7 +23,9 @@ public class MainScene extends Scene
 		super(root);
 
 		this.currentGame = new Game();
+		HUD hud = new HUD(root);
 		Grid gameGrid = new Grid(root);
+
 		Case[][] matchingCase = this.currentGame.getGameGrid();
 		this.chronometer = new Chronometer(this);
 
@@ -31,7 +37,7 @@ public class MainScene extends Scene
 			}
 		}
 		this.currentGame.SpawnTetrimino();
-
+		hud.setCenter(gameGrid);
 		this.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 			public void handle(KeyEvent key)
@@ -56,10 +62,8 @@ public class MainScene extends Scene
 				{
 					if (MainScene.this.chronometer.isActive())
 					{
-						if (!MainScene.this.getCurrentGame().getCurrentTetrimino().MoveDown())
-						{
-							MainScene.this.getCurrentGame().SpawnTetrimino();
-						}
+						MainScene.this.getCurrentGame().getCurrentTetrimino().MoveDown();
+
 					}
 
 				}
@@ -77,16 +81,27 @@ public class MainScene extends Scene
 				{
 					if (MainScene.this.chronometer.isActive())
 					{
-						MainScene.this.chronometer.arreterChronometre();
+						MainScene.this.chronometer.stopChronometer();
+						;
 					}
 					else
 					{
-						MainScene.this.chronometer.lancerChronometre();
+						MainScene.this.chronometer.startChronometer();
 					}
+				}
+
+				if (key.getCode() == KeyCode.SPACE)
+				{
+					while (MainScene.this.getCurrentGame().getCurrentTetrimino().MoveDown())
+						;
 				}
 			}
 		});
-		this.chronometer.lancerChronometre();
+		this.chronometer.startChronometer();
+
+		String lien = new File("ressources/Hurry.mp3").toURI().toString();
+		AudioClip music = new AudioClip(lien);
+		music.play();
 	}
 
 	// gameGrid.add(new BlockGraphics(), 8, 18);
