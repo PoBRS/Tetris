@@ -68,7 +68,7 @@ public class MainScene extends Scene
 				{
 					if (MainScene.this.chronometer.isActive())
 					{
-						MainScene.this.currentGame.getCurrentTetrimino().Rotate();
+						MainScene.this.currentGame.getCurrentTetrimino().RotateCallManager();
 					}
 
 				}

@@ -11,7 +11,7 @@ public class Game
 
 	private final static int NBCASES_X = 10;
 	private final static int NBCASES_Y = 24;
-	private Tetrimino currentTetrimino;
+	private Tetromino currentTetrimino;
 	private EnumShape next;
 
 	private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
@@ -41,11 +41,11 @@ public class Game
 		{
 			this.currentTetrimino.Deactivate();
 		}
-		this.currentTetrimino = new Tetrimino(next, this.gameGrid);
+		this.currentTetrimino = new Tetromino(EnumShape.Z, this.gameGrid);
 		this.next = VALUES.get(RANDOM.nextInt(SIZE));
 	}
 
-	public Tetrimino getCurrentTetrimino()
+	public Tetromino getCurrentTetrimino()
 	{
 		return currentTetrimino;
 	}

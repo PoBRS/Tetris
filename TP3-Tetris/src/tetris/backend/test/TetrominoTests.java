@@ -4,7 +4,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class TetriminoTests
+public class TetrominoTests
 {
 
 	@Test
