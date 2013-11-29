@@ -45,6 +45,9 @@ public class HUD extends BorderPane
     public void setScore(int numberLineCleared)
     {
 	int scoreToAdd;
+	/**
+	 * Once we'll have levels, just multiply scoeToAdd with the levels.
+	 */
 	switch (numberLineCleared)
 	{
 	    case 1:

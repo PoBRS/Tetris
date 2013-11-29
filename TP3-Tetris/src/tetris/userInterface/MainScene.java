@@ -21,6 +21,7 @@ public class MainScene extends Scene
     private AudioClip spin;
     private AudioClip beep;
     private AudioClip crash;
+    private BlockGraphics[][] blocks = new BlockGraphics[10][20];
 
     private HUD hud;
 
@@ -41,12 +42,13 @@ public class MainScene extends Scene
 	{
 	    for (int y = 0; y < 20; y++)
 	    {
-		gameGrid.add(new BlockGraphics(matchingCase[x][y + 4]), x, y);
+		blocks[x][y] = new BlockGraphics(matchingCase[x][y + 4]);
+		gameGrid.add(blocks[x][y], x, y);
 	    }
 	}
 	getHud().setCenter(gameGrid);
 	// hud.setRight(new Score(root));
-	this.currentGame.SpawnTetrimino();
+	// this.currentGame.SpawnTetrimino();
 	String linkTetrisA = new File("ressources/TetrisA.mp3").toURI().toString();
 	Runnable musicRunnable = new MusicPlayer(linkTetrisA);
 	Thread musicThread = new Thread(musicRunnable);
@@ -68,63 +70,43 @@ public class MainScene extends Scene
 	    {
 		if (key.getCode() == KeyCode.LEFT)
 		{
-		    if (MainScene.this.chronometer.isActive())
-		    {
-			MainScene.this.currentGame.getCurrentTetrimino().MoveLeft();
-			MainScene.this.beep.play();
-		    }
+		    MainScene.this.currentGame.getCurrentTetrimino().MoveLeft();
+		    MainScene.this.beep.play();
 		}
 
 		if (key.getCode() == KeyCode.RIGHT)
 		{
-		    if (MainScene.this.chronometer.isActive())
-		    {
-			MainScene.this.currentGame.getCurrentTetrimino().MoveRight();
-			MainScene.this.beep.play();
-		    }
+		    MainScene.this.currentGame.getCurrentTetrimino().MoveRight();
+		    MainScene.this.beep.play();
 		}
-
 		if (key.getCode() == KeyCode.DOWN)
 		{
-		    if (MainScene.this.chronometer.isActive())
-		    {
-			MainScene.this.getCurrentGame().getCurrentTetrimino().MoveDown();
-		    }
+
+		    MainScene.this.getCurrentGame().getCurrentTetrimino().MoveDown();
 
 		}
 
 		if (key.getCode() == KeyCode.UP)
 		{
-		    if (MainScene.this.chronometer.isActive())
-		    {
-			MainScene.this.currentGame.getCurrentTetrimino().RotateCallManager();
-			MainScene.this.spin.play();
-		    }
 
+		    MainScene.this.currentGame.getCurrentTetrimino().RotateCallManager();
+		    MainScene.this.spin.play();
 		}
 
 		if (key.getCode() == KeyCode.ENTER)
 		{
-		    if (MainScene.this.chronometer.isActive())
-		    {
-			MainScene.this.chronometer.stopChronometer();
-			;
-		    }
-		    else
-		    {
-			MainScene.this.chronometer.startChronometer();
-		    }
+		    // Add code to pause the game
 		}
 
 		if (key.getCode() == KeyCode.SPACE)
 		{
 		    while (MainScene.this.getCurrentGame().getCurrentTetrimino().MoveDown())
-			;
+		    {
+			// Repeat until it's completely down, please.
+		    }
 		}
 	    }
 	});
-
-	this.chronometer.startChronometer();
 
     }
 
@@ -148,5 +130,10 @@ public class MainScene extends Scene
     public void setHud(HUD hud)
     {
 	this.hud = hud;
+    }
+
+    public BlockGraphics[][] getBlocks()
+    {
+	return blocks;
     }
 }

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game
 {
@@ -15,6 +17,11 @@ public class Game
     private final static int NBCASES_Y_JEU = 20;
     private Tetromino currentTetromino;
     private EnumShape nextTetromino;
+    private TimerTask GameEvents;
+    private Timer timer;
+    private boolean allowedToClearLine = false;
+    private boolean allowedToSpawnTetromino = false;
+    private LineListener lineListener;
 
     private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
     private static final int SIZE = VALUES.size();
@@ -23,7 +30,7 @@ public class Game
     public Game()
     {
 	this.gameGrid = new Case[NBCASES_X][NBCASES_Y];
-	this.setNextTetromino(VALUES.get(RANDOM.nextInt(SIZE)));
+	this.nextTetromino = VALUES.get(RANDOM.nextInt(SIZE));
 
 	for (int i = 0; i < NBCASES_X; i++)
 	{
@@ -34,17 +41,64 @@ public class Game
 
 	}
 
+	timer = new Timer();
+	this.GameEvents = new TimerTask()
+	{
+	    @Override
+	    public void run()
+	    {
+		if (Game.this.currentTetromino != null)
+		{
+		    Update();
+		}
+	    }
+	};
+	timer.scheduleAtFixedRate(GameEvents, 0, 400);
+	this.SpawnTetrimino();
     }
 
-    public void SpawnTetrimino()
+    public void Update()
+    {
+	if (!this.getCurrentTetrimino().MoveDown())
+	{
+	    this.allowedToSpawnTetromino = true;
+	    if (this.LostGame())
+	    {
+		this.timer.cancel();
+		this.timer.purge();
+	    }
+
+	    int lineToCheck = this.getCurrentTetrimino().findLandingPosY();
+	    for (int i = lineToCheck - 3; i <= lineToCheck; i++)
+	    {
+		this.allowedToClearLine = false;
+
+		if (this.CheckLineIsComplete(i))
+		{
+		    while (this.allowedToClearLine == false)
+		    {
+			// Wait
+		    }
+		    this.ClearLine(i);
+		}
+	    }
+	    while (this.allowedToSpawnTetromino == false)
+	    {
+	    }
+	    this.SpawnTetrimino();
+	}
+
+    }
+
+    private void SpawnTetrimino()
     {
 
 	if (this.currentTetromino != null)
 	{
 	    this.currentTetromino.Deactivate();
 	}
-	this.currentTetromino = new Tetromino(getNextTetromino(), this.gameGrid);
-	this.setNextTetromino(VALUES.get(RANDOM.nextInt(SIZE)));
+	this.currentTetromino = new Tetromino(this.nextTetromino, this.gameGrid);
+	this.nextTetromino = VALUES.get(RANDOM.nextInt(SIZE));
 
     }
 
@@ -61,6 +115,7 @@ public class Game
 
 	if (nbFilledCases == 10)
 	{
+	    this.lineListener.onLineCompleted(line);
 	    return true;
 	}
 	else
@@ -71,6 +126,7 @@ public class Game
 
     public void ClearLine(int line)
     {
+	this.allowedToSpawnTetromino = false;
 	for (int column = 0; column < 10; column++)
 	{
 	    this.gameGrid[column][line].setBlock(null);
@@ -83,6 +139,13 @@ public class Game
 		this.gameGrid[x][y].setBlock(this.gameGrid[x][y - 1].getBlock());
 	    }
 	}
+
+	this.allowedToSpawnTetromino = true;
+    }
+
+    public void setLineListener(LineListener lineListener)
+    {
+	this.lineListener = lineListener;
     }
 
     public boolean LostGame()
@@ -130,6 +193,11 @@ public class Game
     public void setNextTetromino(EnumShape next)
     {
 	this.nextTetromino = next;
+    }
+
+    public void setAllowedToClearLine(boolean allowedToClearLine)
+    {
+	this.allowedToClearLine = allowedToClearLine;
     }
 
 }
