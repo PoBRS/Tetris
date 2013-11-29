@@ -5,27 +5,153 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import tetris.backend.EnumShape;
+import tetris.backend.Game;
 
 public class HUD extends BorderPane
 {
-    public HUD(Group parent)
+
+    private Game game;
+    private Label lblEventOfTheGame;
+    private BorderPane rightPanel;
+    private Label lblScore;
+
+    public HUD(Group parent, Game game)
     {
 	super();
-	Label placeHolder1 = new Label("Évènements de la partie actuelle");
+	this.game = game;
+	this.lblEventOfTheGame = new Label();
+	this.lblEventOfTheGame.setAlignment(Pos.CENTER);
+	this.rightPanel = new BorderPane();
+	this.lblScore = new Label("0");
+
 	Label placeHolder2 = new Label("Meilleurs scores et core de la partie actuelle");
 	Label placeHolder3 = new Label("Prochaine partie");
 	Label placeHolder4 = new Label("Niveau de jeu actuel");
 	Label placeHolder5 = new Label("Nombre de lignes complétées");
-	VBox vbox = new VBox();
-	vbox.setAlignment(Pos.CENTER);
-	vbox.setSpacing(10);
-	vbox.getChildren().addAll(placeHolder3, placeHolder4, placeHolder5);
-
-	this.setLeft(placeHolder2);
-	this.setTop(placeHolder1);
-	this.setRight(vbox);
+	resetNextTetromino();
+	// VBox vbox = new VBox();
+	// vbox.setAlignment(Pos.CENTER);
+	// vbox.setSpacing(10);
+	// vbox.getChildren().addAll(nextPiece, placeHolder4, placeHolder5);
+	this.setLeft(lblScore);
+	this.setRight(this.rightPanel);
+	// this.setLeft(placeHolder2);
+	this.changeEvent(0);
 
 	parent.getChildren().add(this);
+    }
+
+    public void setScore(int numberLineCleared)
+    {
+	int scoreToAdd;
+	switch (numberLineCleared)
+	{
+	    case 1:
+
+		scoreToAdd = 40;
+		break;
+	    case 2:
+		scoreToAdd = 100;
+		break;
+	    case 3:
+		scoreToAdd = 300;
+		break;
+	    case 4:
+		scoreToAdd = 1200;
+		break;
+	    default:
+		scoreToAdd = 0;
+		break;
+	}
+	int currentScore = Integer.parseInt(this.lblScore.getText());
+	int newScore = currentScore + scoreToAdd;
+	this.lblScore.setText(Integer.toString(newScore));
+	// this.setLeft(this.lblEventOfTheGame);
+    }
+
+    public void resetNextTetromino()
+    {
+	NextTetromino nextPiece = new NextTetromino();
+	EnumShape nextTetromino = game.getNextTetromino();
+
+	switch (nextTetromino)
+	{
+	    case I:
+		nextPiece.fillItem(2, 0);
+		nextPiece.fillItem(2, 1);
+		nextPiece.fillItem(2, 2);
+		nextPiece.fillItem(2, 3);
+		break;
+	    case J:
+		nextPiece.fillItem(2, 0);
+		nextPiece.fillItem(2, 1);
+		nextPiece.fillItem(2, 2);
+		nextPiece.fillItem(1, 2);
+		break;
+	    case L:
+		nextPiece.fillItem(1, 0);
+		nextPiece.fillItem(1, 1);
+		nextPiece.fillItem(1, 2);
+		nextPiece.fillItem(2, 2);
+		break;
+
+	    case O:
+
+		nextPiece.fillItem(1, 1);
+		nextPiece.fillItem(2, 1);
+		nextPiece.fillItem(1, 2);
+		nextPiece.fillItem(2, 2);
+		break;
+
+	    case S:
+		nextPiece.fillItem(3, 1);
+		nextPiece.fillItem(2, 1);
+		nextPiece.fillItem(2, 2);
+		nextPiece.fillItem(1, 2);
+		break;
+	    case T:
+		nextPiece.fillItem(1, 2);
+		nextPiece.fillItem(2, 2);
+		nextPiece.fillItem(2, 1);
+		nextPiece.fillItem(3, 2);
+		break;
+
+	    case Z:
+		nextPiece.fillItem(1, 1);
+		nextPiece.fillItem(2, 1);
+		nextPiece.fillItem(2, 2);
+		nextPiece.fillItem(3, 2);
+		break;
+
+	}
+	this.rightPanel.setTop(nextPiece);
+    }
+
+    public void changeEvent(int numberLineCleared)
+    {
+	String message;
+	switch (numberLineCleared)
+	{
+	    case 1:
+
+		message = "Line.";
+		break;
+	    case 2:
+		message = "Combo!";
+		break;
+	    case 3:
+		message = "Three in a row!";
+		break;
+	    case 4:
+		message = "TETRIS!!";
+		break;
+	    default:
+		message = "";
+		break;
+	}
+
+	this.lblEventOfTheGame.setText(message);
+	this.setTop(this.lblEventOfTheGame);
     }
 }

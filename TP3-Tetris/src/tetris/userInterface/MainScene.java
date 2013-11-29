@@ -16,24 +16,25 @@ import tetris.backend.Game;
 public class MainScene extends Scene
 {
     private Game currentGame;
-
+    private int numberLineCompleted;
     private Chronometer chronometer;
     private AudioClip spin;
     private AudioClip beep;
     private AudioClip crash;
 
-    private AudioClip tetrisA;
+    private HUD hud;
 
     public MainScene(Stage primaryStage, Group root)
     {
 	super(root);
-
+	numberLineCompleted = 0;
 	this.currentGame = new Game();
-	HUD hud = new HUD(root);
+	setHud(new HUD(root, this.currentGame));
 
 	Grid gameGrid = new Grid(root);
 
 	Case[][] matchingCase = this.currentGame.getGameGrid();
+
 	this.chronometer = new Chronometer(this);
 
 	for (int x = 0; x < 10; x++)
@@ -43,9 +44,9 @@ public class MainScene extends Scene
 		gameGrid.add(new BlockGraphics(matchingCase[x][y + 4]), x, y);
 	    }
 	}
+	getHud().setCenter(gameGrid);
+	// hud.setRight(new Score(root));
 	this.currentGame.SpawnTetrimino();
-	hud.setCenter(gameGrid);
-
 	String linkTetrisA = new File("ressources/TetrisA.mp3").toURI().toString();
 	Runnable musicRunnable = new MusicPlayer(linkTetrisA);
 	Thread musicThread = new Thread(musicRunnable);
@@ -122,6 +123,7 @@ public class MainScene extends Scene
 		}
 	    }
 	});
+
 	this.chronometer.startChronometer();
 
     }
@@ -136,5 +138,15 @@ public class MainScene extends Scene
     public AudioClip getCrash()
     {
 	return crash;
+    }
+
+    public HUD getHud()
+    {
+	return hud;
+    }
+
+    public void setHud(HUD hud)
+    {
+	this.hud = hud;
     }
 }

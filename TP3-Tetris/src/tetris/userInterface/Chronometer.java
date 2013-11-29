@@ -1,3 +1,4 @@
+
 package tetris.userInterface;
 
 import javafx.animation.KeyFrame;
@@ -8,75 +9,80 @@ import javafx.util.Duration;
 
 public class Chronometer
 {
-	private Timeline timelineInGame;
-	private boolean active = false;
-	private MainScene mainScene;
+    private Timeline timelineInGame;
+    private boolean active = false;
+    private MainScene mainScene;
 
-	public Chronometer(final MainScene mainScene)
+    public Chronometer(final MainScene mainScene)
+    {
+	this.mainScene = mainScene;
+	this.timelineInGame = new Timeline(new KeyFrame(Duration.millis(800), new EventHandler<ActionEvent>()
 	{
-		this.mainScene = mainScene;
-		this.timelineInGame = new Timeline(new KeyFrame(Duration.millis(800), new EventHandler<ActionEvent>()
+
+	    @Override
+	    public void handle(ActionEvent event)
+	    {
+		Chronometer.this.resetTimer(800);
+	    }
+	}));
+
+	this.timelineInGame.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    public void resetTimer(final double timerInterval)
+    {
+	KeyFrame keyFrame = new KeyFrame(Duration.millis(timerInterval), new EventHandler<ActionEvent>()
+	{
+	    @Override
+	    public void handle(ActionEvent event)
+	    {
+		if (!mainScene.getCurrentGame().getCurrentTetrimino().MoveDown())
 		{
+		    Chronometer.this.mainScene.getCrash().play();
 
-			@Override
-			public void handle(ActionEvent event)
+		    if (mainScene.getCurrentGame().LostGame())
+		    {
+			Chronometer.this.stopChronometer();
+		    }
+
+		    int lineToCheck = mainScene.getCurrentGame().getCurrentTetrimino().findLandingPosY();
+		    int numberLineCompleted = 0;
+		    for (int i = lineToCheck - 3; i <= lineToCheck; i++)
+		    {
+			if (mainScene.getCurrentGame().CheckLineIsComplete(i))
 			{
-				Chronometer.this.resetTimer(800);
+			    mainScene.getCurrentGame().ClearLine(i);
+			    numberLineCompleted++;
 			}
-		}));
+		    }
+		    mainScene.getHud().changeEvent(numberLineCompleted);
+		    mainScene.getCurrentGame().SpawnTetrimino();
+		    mainScene.getHud().resetNextTetromino();
+		    mainScene.getHud().setScore(numberLineCompleted);
+		}
+	    }
+	});
+	this.timelineInGame.stop();
+	this.timelineInGame.getKeyFrames().setAll(keyFrame);
+	this.timelineInGame.play();
+    }
 
-		this.timelineInGame.setCycleCount(Timeline.INDEFINITE);
-	}
+    public void stopChronometer()
+    {
+	this.timelineInGame.stop();
+	this.active = false;
 
-	public void resetTimer(final double timerInterval)
-	{
-		KeyFrame keyFrame = new KeyFrame(Duration.millis(timerInterval), new EventHandler<ActionEvent>()
-		{
-			@Override
-			public void handle(ActionEvent event)
-			{
-				if (!mainScene.getCurrentGame().getCurrentTetrimino().MoveDown())
-				{
-					Chronometer.this.mainScene.getCrash().play();
+    }
 
-					if (mainScene.getCurrentGame().LostGame())
-					{
-						Chronometer.this.stopChronometer();
-					}
+    public void startChronometer()
+    {
+	this.timelineInGame.play();
+	this.active = true;
+    }
 
-					int lineToCheck = mainScene.getCurrentGame().getCurrentTetrimino().findLandingPosY();
-					for (int i = lineToCheck - 3; i <= lineToCheck; i++)
-					{
-						if (mainScene.getCurrentGame().CheckLineIsComplete(i))
-						{
-							mainScene.getCurrentGame().ClearLine(i);
-						}
-					}
-					mainScene.getCurrentGame().SpawnTetrimino();
-				}
-			}
-		});
-		this.timelineInGame.stop();
-		this.timelineInGame.getKeyFrames().setAll(keyFrame);
-		this.timelineInGame.play();
-	}
-
-	public void stopChronometer()
-	{
-		this.timelineInGame.stop();
-		this.active = false;
-
-	}
-
-	public void startChronometer()
-	{
-		this.timelineInGame.play();
-		this.active = true;
-	}
-
-	public boolean isActive()
-	{
-		return active;
-	}
+    public boolean isActive()
+    {
+	return active;
+    }
 
 }

@@ -1,3 +1,4 @@
+
 package tetris.backend;
 
 import java.util.Arrays;
@@ -7,117 +8,128 @@ import java.util.Random;
 
 public class Game
 {
-	private Case gameGrid[][];
+    private Case gameGrid[][];
 
-	private final static int NBCASES_X = 10;
-	private final static int NBCASES_Y = 24;
-	private final static int NBCASES_Y_JEU = 20;
-	private Tetromino currentTetromino;
-	private EnumShape next;
+    private final static int NBCASES_X = 10;
+    private final static int NBCASES_Y = 24;
+    private final static int NBCASES_Y_JEU = 20;
+    private Tetromino currentTetromino;
+    private EnumShape nextTetromino;
 
-	private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
-	private static final int SIZE = VALUES.size();
-	private static final Random RANDOM = new Random();
+    private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
 
-	public Game()
+    public Game()
+    {
+	this.gameGrid = new Case[NBCASES_X][NBCASES_Y];
+	this.setNextTetromino(VALUES.get(RANDOM.nextInt(SIZE)));
+
+	for (int i = 0; i < NBCASES_X; i++)
 	{
-		this.gameGrid = new Case[NBCASES_X][NBCASES_Y];
-		this.next = VALUES.get(RANDOM.nextInt(SIZE));
-
-		for (int i = 0; i < NBCASES_X; i++)
-		{
-			for (int j = 0; j < NBCASES_Y; j++)
-			{
-				this.gameGrid[i][j] = new Case(i, j);
-			}
-
-		}
+	    for (int j = 0; j < NBCASES_Y; j++)
+	    {
+		this.gameGrid[i][j] = new Case(i, j);
+	    }
 
 	}
 
-	public void SpawnTetrimino()
-	{
+    }
 
-		if (this.currentTetromino != null)
-		{
-			this.currentTetromino.Deactivate();
-		}
-		this.currentTetromino = new Tetromino(next, this.gameGrid);
-		this.next = VALUES.get(RANDOM.nextInt(SIZE));
+    public void SpawnTetrimino()
+    {
+
+	if (this.currentTetromino != null)
+	{
+	    this.currentTetromino.Deactivate();
+	}
+	this.currentTetromino = new Tetromino(getNextTetromino(), this.gameGrid);
+	this.setNextTetromino(VALUES.get(RANDOM.nextInt(SIZE)));
+
+    }
+
+    public boolean CheckLineIsComplete(int line)
+    {
+	int nbFilledCases = 0;
+	for (int x = 0; x < Game.NBCASES_X; x++)
+	{
+	    if (this.gameGrid[x][line].getBlock() != null)
+	    {
+		nbFilledCases++;
+	    }
 	}
 
-	public boolean CheckLineIsComplete(int line)
+	if (nbFilledCases == 10)
 	{
-		int nbFilledCases = 0;
-		for (int x = 0; x < Game.NBCASES_X; x++)
-		{
-			if (this.gameGrid[x][line].getBlock() != null)
-			{
-				nbFilledCases++;
-			}
-		}
+	    return true;
+	}
+	else
+	{
+	    return false;
+	}
+    }
 
-		if (nbFilledCases == 10)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+    public void ClearLine(int line)
+    {
+	for (int column = 0; column < 10; column++)
+	{
+	    this.gameGrid[column][line].setBlock(null);
 	}
 
-	public void ClearLine(int line)
+	for (int y = line; y > 0; y--)
 	{
-		for (int column = 0; column < 10; column++)
+	    for (int x = 0; x < Game.NBCASES_X; x++)
+	    {
+		this.gameGrid[x][y].setBlock(this.gameGrid[x][y - 1].getBlock());
+	    }
+	}
+    }
+
+    public boolean LostGame()
+    {
+	for (int y = 3; y >= 0; y--)
+	{
+	    for (int x = 0; x < Game.NBCASES_X; x++)
+	    {
+		if (this.gameGrid[x][y].getBlock() != null)
 		{
-			this.gameGrid[column][line].setBlock(null);
+		    return true;
 		}
-
-		for (int y = line; y > 0; y--)
-		{
-			for (int x = 0; x < Game.NBCASES_X; x++)
-			{
-				this.gameGrid[x][y].setBlock(this.gameGrid[x][y - 1].getBlock());
-			}
-		}
+	    }
 	}
+	return false;
+    }
 
-	public boolean LostGame()
+    public Tetromino getCurrentTetrimino()
+    {
+	return currentTetromino;
+    }
+
+    public void PrintGame()
+    {
+	for (int y = 0; y < NBCASES_Y; y++)
 	{
-		for (int y = 3; y >= 0; y--)
-		{
-			for (int x = 0; x < Game.NBCASES_X; x++)
-			{
-				if (this.gameGrid[x][y].getBlock() != null)
-				{
-					return true;
-				}
-			}
-		}
-		return false;
+	    for (int x = 0; x < NBCASES_X; x++)
+	    {
+		this.gameGrid[x][y].Print();
+	    }
+	    System.out.println();
 	}
+    }
 
-	public Tetromino getCurrentTetrimino()
-	{
-		return currentTetromino;
-	}
+    public Case[][] getGameGrid()
+    {
+	return gameGrid;
+    }
 
-	public void PrintGame()
-	{
-		for (int y = 0; y < NBCASES_Y; y++)
-		{
-			for (int x = 0; x < NBCASES_X; x++)
-			{
-				this.gameGrid[x][y].Print();
-			}
-			System.out.println();
-		}
-	}
+    public EnumShape getNextTetromino()
+    {
+	return this.nextTetromino;
+    }
 
-	public Case[][] getGameGrid()
-	{
-		return gameGrid;
-	}
+    public void setNextTetromino(EnumShape next)
+    {
+	this.nextTetromino = next;
+    }
 
 }
