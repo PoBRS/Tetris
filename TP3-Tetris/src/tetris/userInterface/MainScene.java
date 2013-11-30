@@ -11,27 +11,29 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import tetris.backend.Case;
+import tetris.backend.EnumShape;
 import tetris.backend.Game;
+import tetris.backend.NewTetrominoListener;
 
-public class MainScene extends Scene
+public class MainScene extends Scene implements NewTetrominoListener
 {
     private Game currentGame;
-    private int numberLineCompleted;
-    private Chronometer chronometer;
     private AudioClip spin;
     private AudioClip beep;
     private AudioClip crash;
     private BlockGraphics[][] blocks = new BlockGraphics[10][20];
 
     private HUD hud;
+    private Chronometer chronometer;
+    private int numberLineCompleted;
 
     public MainScene(Stage primaryStage, Group root)
     {
 	super(root);
-	numberLineCompleted = 0;
+	this.numberLineCompleted = 0;
 	this.currentGame = new Game();
 	setHud(new HUD(root, this.currentGame));
-
+	this.currentGame.setNewTetrominoListener(this);
 	Grid gameGrid = new Grid(root);
 
 	Case[][] matchingCase = this.currentGame.getGameGrid();
@@ -110,8 +112,6 @@ public class MainScene extends Scene
 
     }
 
-    // gameGrid.add(new BlockGraphics(), 8, 18);
-
     public Game getCurrentGame()
     {
 	return this.currentGame;
@@ -135,5 +135,12 @@ public class MainScene extends Scene
     public BlockGraphics[][] getBlocks()
     {
 	return blocks;
+    }
+
+    @Override
+    public void onNewTetromino(EnumShape nextTetromino)
+    {
+	this.crash.play();
+
     }
 }

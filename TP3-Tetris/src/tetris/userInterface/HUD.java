@@ -7,14 +7,16 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import tetris.backend.EnumShape;
 import tetris.backend.Game;
+import tetris.backend.NewTetrominoListener;
 
-public class HUD extends BorderPane
+public class HUD extends BorderPane implements NewTetrominoListener
 {
 
     private Game game;
     private Label lblEventOfTheGame;
     private BorderPane rightPanel;
     private Label lblScore;
+    private NextTetromino nextPiece;
 
     public HUD(Group parent, Game game)
     {
@@ -24,19 +26,19 @@ public class HUD extends BorderPane
 	this.lblEventOfTheGame.setAlignment(Pos.CENTER);
 	this.rightPanel = new BorderPane();
 	this.lblScore = new Label("0");
+	this.game.setNewTetrominoListener(this);
+	this.nextPiece = new NextTetromino();
+	this.resetNextTetromino(this.game.getNextTetromino());
+	this.rightPanel.setTop(this.nextPiece);
 
 	Label placeHolder2 = new Label("Meilleurs scores et core de la partie actuelle");
 	Label placeHolder3 = new Label("Prochaine partie");
 	Label placeHolder4 = new Label("Niveau de jeu actuel");
 	Label placeHolder5 = new Label("Nombre de lignes complétées");
-	resetNextTetromino();
-	// VBox vbox = new VBox();
-	// vbox.setAlignment(Pos.CENTER);
-	// vbox.setSpacing(10);
-	// vbox.getChildren().addAll(nextPiece, placeHolder4, placeHolder5);
+
 	this.setLeft(lblScore);
 	this.setRight(this.rightPanel);
-	// this.setLeft(placeHolder2);
+
 	this.changeEvent(0);
 
 	parent.getChildren().add(this);
@@ -73,10 +75,9 @@ public class HUD extends BorderPane
 	// this.setLeft(this.lblEventOfTheGame);
     }
 
-    public void resetNextTetromino()
+    public void resetNextTetromino(EnumShape nextTetromino)
     {
-	NextTetromino nextPiece = new NextTetromino();
-	EnumShape nextTetromino = game.getNextTetromino();
+	nextPiece.resetItem();
 
 	switch (nextTetromino)
 	{
@@ -156,5 +157,12 @@ public class HUD extends BorderPane
 
 	this.lblEventOfTheGame.setText(message);
 	this.setTop(this.lblEventOfTheGame);
+    }
+
+    @Override
+    public void onNewTetromino(EnumShape nextTetromino)
+    {
+	this.resetNextTetromino(nextTetromino);
+
     }
 }

@@ -1,6 +1,7 @@
 
 package tetris.backend;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Game
     private boolean allowedToClearLine = false;
     private boolean allowedToSpawnTetromino = false;
     private LineListener lineListener;
+    private ArrayList<NewTetrominoListener> newTetrominoListener = new ArrayList<>();
 
     private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
     private static final int SIZE = VALUES.size();
@@ -29,6 +31,7 @@ public class Game
 
     public Game()
     {
+
 	this.gameGrid = new Case[NBCASES_X][NBCASES_Y];
 	this.nextTetromino = VALUES.get(RANDOM.nextInt(SIZE));
 
@@ -100,6 +103,14 @@ public class Game
 	this.currentTetromino = new Tetromino(this.nextTetromino, this.gameGrid);
 	this.nextTetromino = VALUES.get(RANDOM.nextInt(SIZE));
 
+	if (this.newTetrominoListener != null)
+	{
+	    for (NewTetrominoListener listener : this.newTetrominoListener)
+	    {
+		listener.onNewTetromino(this.nextTetromino);
+	    }
+	}
+
     }
 
     public boolean CheckLineIsComplete(int line)
@@ -146,6 +157,11 @@ public class Game
     public void setLineListener(LineListener lineListener)
     {
 	this.lineListener = lineListener;
+    }
+
+    public void setNewTetrominoListener(NewTetrominoListener newTetrominoListener)
+    {
+	this.newTetrominoListener.add(newTetrominoListener);
     }
 
     public boolean LostGame()

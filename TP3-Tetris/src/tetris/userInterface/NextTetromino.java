@@ -30,8 +30,19 @@ public class NextTetromino extends GridPane
     public void fillItem(int x, int y)
     {
 	gridArray[x][y].setFill(Color.BLACK);
-	this.getChildren().remove(gridArray[x][y]);
-	this.add(gridArray[x][y], x, y);
+
+    }
+
+    public void resetItem()
+    {
+
+	for (int y = 0; y < 4; y++)
+	{
+	    for (int x = 0; x < 4; x++)
+	    {
+		gridArray[x][y].setFill(Color.GREY);
+	    }
+	}
     }
 
 }
