@@ -29,6 +29,10 @@ public class Chronometer implements LineListener
 		if (Chronometer.this.blockPosX >= 10)
 		{
 		    Chronometer.this.stopChronometer();
+		    for (int i = 0; i < 10; i++)
+		    {
+			(Chronometer.this.mainScene.getBlocks())[i][Chronometer.this.line - 4].unflash();
+		    }
 		    Chronometer.this.mainScene.getCurrentGame().setAllowedToClearLine(true);
 		}
 		else

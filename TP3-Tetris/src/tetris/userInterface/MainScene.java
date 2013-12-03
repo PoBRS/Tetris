@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import tetris.backend.Case;
 import tetris.backend.EnumShape;
 import tetris.backend.Game;
@@ -107,6 +108,15 @@ public class MainScene extends Scene implements NewTetrominoListener
 			// Repeat until it's completely down, please.
 		    }
 		}
+	    }
+	});
+
+	primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
+	{
+	    @Override
+	    public void handle(WindowEvent event)
+	    {
+		MainScene.this.currentGame.Destroy();
 	    }
 	});
 

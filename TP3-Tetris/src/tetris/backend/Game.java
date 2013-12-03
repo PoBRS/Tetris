@@ -23,6 +23,7 @@ public class Game
     private boolean allowedToClearLine = false;
     private boolean allowedToSpawnTetromino = false;
     private LineListener lineListener;
+
     private ArrayList<NewTetrominoListener> newTetrominoListener = new ArrayList<>();
 
     private static final List<EnumShape> VALUES = Collections.unmodifiableList(Arrays.asList(EnumShape.values()));
@@ -67,8 +68,9 @@ public class Game
 	    this.allowedToSpawnTetromino = true;
 	    if (this.LostGame())
 	    {
-		this.timer.cancel();
-		this.timer.purge();
+		this.Destroy();
+		// this.this.timer.cancel();
+		// this.timer.purge();
 	    }
 
 	    int lineToCheck = this.getCurrentTetrimino().findLandingPosY();
@@ -126,7 +128,9 @@ public class Game
 
 	if (nbFilledCases == 10)
 	{
+
 	    this.lineListener.onLineCompleted(line);
+
 	    return true;
 	}
 	else
@@ -214,6 +218,12 @@ public class Game
     public void setAllowedToClearLine(boolean allowedToClearLine)
     {
 	this.allowedToClearLine = allowedToClearLine;
+    }
+
+    public void Destroy()
+    {
+	this.timer.cancel();
+	this.timer.purge();
     }
 
 }

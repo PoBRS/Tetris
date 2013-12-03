@@ -7,9 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import tetris.backend.EnumShape;
 import tetris.backend.Game;
+import tetris.backend.LineListener;
 import tetris.backend.NewTetrominoListener;
 
-public class HUD extends BorderPane implements NewTetrominoListener
+public class HUD extends BorderPane implements NewTetrominoListener, LineListener
 {
 
     private Game game;
@@ -27,6 +28,7 @@ public class HUD extends BorderPane implements NewTetrominoListener
 	this.rightPanel = new BorderPane();
 	this.lblScore = new Label("0");
 	this.game.setNewTetrominoListener(this);
+	this.game.setLineListener(this);
 	this.nextPiece = new NextTetromino();
 	this.resetNextTetromino(this.game.getNextTetromino());
 	this.rightPanel.setTop(this.nextPiece);
@@ -72,7 +74,7 @@ public class HUD extends BorderPane implements NewTetrominoListener
 	int currentScore = Integer.parseInt(this.lblScore.getText());
 	int newScore = currentScore + scoreToAdd;
 	this.lblScore.setText(Integer.toString(newScore));
-	// this.setLeft(this.lblEventOfTheGame);
+	return;
     }
 
     public void resetNextTetromino(EnumShape nextTetromino)
@@ -163,6 +165,13 @@ public class HUD extends BorderPane implements NewTetrominoListener
     public void onNewTetromino(EnumShape nextTetromino)
     {
 	this.resetNextTetromino(nextTetromino);
+
+    }
+
+    @Override
+    public void onLineCompleted(int line)
+    {
+	this.setScore(1); // Temp, for testing.
 
     }
 }

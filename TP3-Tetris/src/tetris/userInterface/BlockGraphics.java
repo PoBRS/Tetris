@@ -39,8 +39,11 @@ public class BlockGraphics extends Rectangle implements CaseListener
 
     public void flash()
     {
-
 	BlockGraphics.this.setEffect(new Glow(5.00));
+    }
 
+    public void unflash()
+    {
+	BlockGraphics.this.setEffect(new Glow(0));
     }
 }
