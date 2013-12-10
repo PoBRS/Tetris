@@ -27,6 +27,7 @@ import javafx.stage.Stage;
  */
 public class MenuScene extends Scene
 {
+    private static final String BACKGROUND_PATH = "file:ressources/background/Kremlin.jpg";
     private final static int MENU_WIDTH = 400;
     private final static int MENU_HEIGHT = 600;
     private Stage primaryStage;
@@ -48,7 +49,7 @@ public class MenuScene extends Scene
 	super(root);
 	this.primaryStage = primaryStage;
 
-	Image backgroundImage = new Image("file:ressources/Kremlin.jpg");
+	Image backgroundImage = new Image(BACKGROUND_PATH);
 	Paint backgroundPaint = new ImagePattern(backgroundImage, 0, 0, MENU_WIDTH, MENU_HEIGHT, false);
 	Rectangle background = new Rectangle(MENU_WIDTH, MENU_HEIGHT, backgroundPaint);
 
@@ -75,7 +76,7 @@ public class MenuScene extends Scene
 	    @Override
 	    public void handle(ActionEvent arg0)
 	    {
-		HighScoreScene highScoreScene = new HighScoreScene(new Group());
+		HighScoreScene highScoreScene = new HighScoreScene(MenuScene.this.primaryStage, new Group());
 		MenuScene.this.primaryStage.setScene(highScoreScene);
 	    }
 	});

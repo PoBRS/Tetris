@@ -37,6 +37,7 @@ import javafx.stage.Stage;
  */
 public class HighScoreScene extends Scene
 {
+    private static final String BACKGROUND_PATH = "file:ressources/background/USSR.jpg";
     private static final String RESSOURCE_SCORE_FILE = "ressources/highscores.txt";
     private final static int MENU_WIDTH = 400;
     private final static int MENU_HEIGHT = 600;
@@ -49,12 +50,13 @@ public class HighScoreScene extends Scene
      *            -> Conteneur des composants de la scene.
      * @todo Séparer ce constructeur en sous-fonction qui crée chaqu'un leur composant.
      */
-    public HighScoreScene(Group root)
+    public HighScoreScene(Stage primaryStage, Group root)
     {
 
 	super(root);
+	this.primaryStage = primaryStage;
 
-	Image backgroundImage = new Image("file:ressources/USSR.jpg");
+	Image backgroundImage = new Image(BACKGROUND_PATH);
 	Paint backgroundPaint = new ImagePattern(backgroundImage, 0, 0, MENU_WIDTH, MENU_HEIGHT, false);
 	Rectangle background = new Rectangle(MENU_WIDTH, MENU_HEIGHT, backgroundPaint);
 
@@ -70,10 +72,6 @@ public class HighScoreScene extends Scene
 	for (int i = 0; i < 10; i++)
 	{
 	    String name = tenScores[i][0];
-	    if (name.length() == 0)
-	    {
-		name = "Anonyme";
-	    }
 	    Label lblPosition = new Label(Integer.toString(i + 1) + " - ");
 	    Label lblName = new Label(name);
 	    Label lblScore = new Label(tenScores[i][1]);

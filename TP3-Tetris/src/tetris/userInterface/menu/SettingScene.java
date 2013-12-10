@@ -1,7 +1,6 @@
 
 package tetris.userInterface.menu;
 
-import tetris.userInterface.board.MainScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +21,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import tetris.userInterface.board.MainScene;
 
 /**
  * Classe représentant la scène pour la fenètre de réglage.
@@ -35,6 +35,7 @@ import javafx.stage.Stage;
  */
 public class SettingScene extends Scene
 {
+    private static final String BACKGROUND_PATH = "file:ressources/background/Kremlin_Diorama_Effect.jpg";
     private final static int MAXIMUM_START_LEVEL = 9;
     private Stage primaryStage;
     private ComboBox<String> cbMusicSelection;
@@ -62,7 +63,7 @@ public class SettingScene extends Scene
 	super(root);
 	this.primaryStage = primaryStage;
 
-	Image backgroundImage = new Image("file:ressources/Kremlin_Diorama_Effect.jpg");
+	Image backgroundImage = new Image(BACKGROUND_PATH);
 	Paint backgroundPaint = new ImagePattern(backgroundImage, 0, 0, StageWidth, StageHeight, false);
 	Rectangle background = new Rectangle(StageWidth, StageHeight, backgroundPaint);
 
@@ -103,7 +104,7 @@ public class SettingScene extends Scene
 		int level = Integer.parseInt(SettingScene.this.cbLevelSelection.getValue());
 		int musicIndex = SettingScene.this.cbMusicSelection.getSelectionModel().getSelectedIndex();
 		String name = SettingScene.this.txName.getText();
-		if (name == "")
+		if (name.length() == 0)
 		{
 		    name = "Anonyme";
 		}

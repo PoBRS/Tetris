@@ -46,13 +46,13 @@ public class MainScene extends Scene implements NewTetrominoListener, GameEndLis
     private HUD hud;
     private Grid gameGrid;
 
-    final static String BACKGROUND_PATH = "file:ressources/Kremlin_Night.jpg";
-    final static String MP3A = "ressources/TetrisA.mp3";
-    final static String MP3B = "ressources/TetrisB.mp3";
-    final static String MP3C = "ressources/TetrisC.mp3";
-    final static String MP3CRASH = "ressources/Crash.mp3";
-    final static String MP3SPIN = "ressources/Spin.mp3";
-    final static String MP3BEEP = "ressources/Beep.mp3";
+    final static String BACKGROUND_PATH = "file:ressources/background/Kremlin_Night.jpg";
+    final static String MP3A = "ressources/music/TetrisA.mp3";
+    final static String MP3B = "ressources/music/TetrisB.mp3";
+    final static String MP3C = "ressources/music/TetrisC.mp3";
+    final static String MP3CRASH = "ressources/sound/Crash.mp3";
+    final static String MP3SPIN = "ressources/sound/Spin.mp3";
+    final static String MP3BEEP = "ressources/sound/Beep.mp3";
 
     // These warnings are inaccurate. Those classes are accessed by the listeners.
     // Even though they are not accessed directly, they react to changes in the game

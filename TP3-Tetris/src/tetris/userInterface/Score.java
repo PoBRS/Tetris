@@ -37,7 +37,9 @@ public class Score implements GameEndListener
     {
 	mainScene.getCurrentGame().setGameEndListener(this);
 	this.mainScene = mainScene;
+
 	this.name = name;
+
     }
 
     /**
