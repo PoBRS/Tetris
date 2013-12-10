@@ -112,7 +112,7 @@ public class HighScoreScene extends Scene
 
 	menuBox.getChildren().addAll(lblGameTitle, scoreGrid, btnBack);
 	menuBox.setAlignment(Pos.CENTER);
-	menuBox.setLayoutX((MENU_WIDTH / 2) - 125);
+	menuBox.setLayoutX(50);
 	menuBox.setLayoutY(25);
 
 	root.getChildren().addAll(background, menuBox);

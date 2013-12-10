@@ -1,6 +1,8 @@
 
 package tetris.userInterface.menu;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,12 +37,13 @@ import tetris.userInterface.board.MainScene;
  */
 public class SettingScene extends Scene
 {
+    private static final int MAXIMUM_NAME_LENGTH = 10;
     private static final String BACKGROUND_PATH = "file:ressources/background/Kremlin_Diorama_Effect.jpg";
     private final static int MAXIMUM_START_LEVEL = 9;
     private Stage primaryStage;
     private ComboBox<String> cbMusicSelection;
     private ComboBox<String> cbLevelSelection;
-    private TextField txName;
+    private TextField txtName;
 
     /**
      * Constructeur de Setting Scene.
@@ -78,7 +81,20 @@ public class SettingScene extends Scene
 	ObservableList<String> musicOptions = FXCollections.observableArrayList("A", "B", "C");
 	this.cbMusicSelection = new ComboBox<>(musicOptions);
 
-	this.txName = new TextField();
+	this.txtName = new TextField();
+	this.txtName.textProperty().addListener(new ChangeListener<String>()
+	{
+
+	    @Override
+	    public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue)
+	    {
+		// Check if the name is too long.
+		if (newValue.length() > SettingScene.MAXIMUM_NAME_LENGTH)
+		{
+		    SettingScene.this.txtName.setText(oldValue);
+		}
+	    }
+	});
 	Label lblName = new Label("Nom : ");
 	lblName.setTextFill(Color.WHITE);
 
@@ -103,7 +119,10 @@ public class SettingScene extends Scene
 	    {
 		int level = Integer.parseInt(SettingScene.this.cbLevelSelection.getValue());
 		int musicIndex = SettingScene.this.cbMusicSelection.getSelectionModel().getSelectedIndex();
-		String name = SettingScene.this.txName.getText();
+		String name = SettingScene.this.txtName.getText();
+		name = name.trim();
+		name = name.replace(' ', '_');
+
 		if (name.length() == 0)
 		{
 		    name = "Anonyme";
@@ -121,7 +140,7 @@ public class SettingScene extends Scene
 
 	HBox nameHBox = new HBox(20);
 	lblName.setFont(new Font("Arial", 20));
-	nameHBox.getChildren().addAll(lblName, this.txName);
+	nameHBox.getChildren().addAll(lblName, this.txtName);
 
 	HBox levelHBox = new HBox(20);
 	levelHBox.getChildren().addAll(lblLevelSelection, this.cbLevelSelection);
