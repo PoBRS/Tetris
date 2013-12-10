@@ -1,20 +1,17 @@
-
 package tetris.backend;
-
 /**
- * Interface qui réagit au changement d'une case.
+ * Interface qui réagit à la fin d'une partie.
  * 
  * @author Pierre-Olivier Boulet
  * @author Raphaël Sylvain
  * 
- * @see Case
+ * @see Game
  * 
  * @since 09/12/2013
  * 
  */
-public interface CaseListener
+public interface GameEndListener
 {
-
-    public void onCaseStateChanged();
+	public void onGameEnd();
 
 }

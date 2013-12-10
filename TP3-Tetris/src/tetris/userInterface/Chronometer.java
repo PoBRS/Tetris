@@ -8,14 +8,30 @@ import javafx.event.EventHandler;
 import javafx.util.Duration;
 import tetris.backend.LineListener;
 
+/**
+ * Classe qui gère l'animation des BlockGraphics de la grille de jeu.
+ * 
+ * @author Pierre-Olivier Boulet
+ * @author Raphaël Sylvain
+ * 
+ * @see BlockGraphics
+ * 
+ * @since 09/12/2013
+ * 
+ */
 public class Chronometer implements LineListener
 {
     private Timeline timelineAnimations;
-    private boolean active = false;
     private MainScene mainScene;
     private int line = 0;
     private int blockPosX = 0;
 
+    /**
+     * Constructeur de chronometer.
+     * 
+     * @param mainScene
+     *            -> La MainScene sur laquelle l'animation se déroulera.
+     */
     public Chronometer(final MainScene mainScene)
     {
 	this.mainScene = mainScene;
@@ -28,7 +44,7 @@ public class Chronometer implements LineListener
 	    {
 		if (Chronometer.this.blockPosX >= 10)
 		{
-		    Chronometer.this.stopChronometer();
+		    Chronometer.this.StopChronometer();
 		    for (int i = 0; i < 10; i++)
 		    {
 			(Chronometer.this.mainScene.getBlocks())[i][Chronometer.this.line - 4].unflash();
@@ -46,63 +62,31 @@ public class Chronometer implements LineListener
 	this.timelineAnimations.setCycleCount(Timeline.INDEFINITE);
     }
 
-    // public void resetTimer(final double timerInterval)
-    // {
-    // KeyFrame keyFrame = new KeyFrame(Duration.millis(timerInterval), new EventHandler<ActionEvent>()
-    // {
-    // @Override
-    // public void handle(ActionEvent event)
-    // {
-    // if (!mainScene.getCurrentGame().getCurrentTetrimino().MoveDown())
-    // {
-    // Chronometer.this.mainScene.getCrash().play();
-    //
-    // if (mainScene.getCurrentGame().LostGame())
-    // {
-    // Chronometer.this.stopChronometer();
-    // }
-    //
-    // int lineToCheck = mainScene.getCurrentGame().getCurrentTetrimino().findLandingPosY();
-    // int numberLineCompleted = 0;
-    // for (int i = lineToCheck - 3; i <= lineToCheck; i++)
-    // {
-    // if (mainScene.getCurrentGame().CheckLineIsComplete(i))
-    // {
-    // mainScene.getCurrentGame().ClearLine(i);
-    // numberLineCompleted++;
-    // }
-    // }
-    // mainScene.getHud().changeEvent(numberLineCompleted);
-    // mainScene.getCurrentGame().SpawnTetrimino();
-    // mainScene.getHud().resetNextTetromino();
-    // mainScene.getHud().setScore(numberLineCompleted);
-    // }
-    // }
-    // });
-    // this.timelineInGame.stop();
-    // this.timelineInGame.getKeyFrames().setAll(keyFrame);
-    // this.timelineInGame.play();
-    // }
-
-    public void stopChronometer()
+    /**
+     * Fonction qui arrête toutes animations.
+     */
+    public void StopChronometer()
     {
 	this.timelineAnimations.stop();
-	this.active = false;
-
     }
 
-    public void startChronometer()
+    /**
+     * Fonction qui démarre l'animation
+     */
+    private void startChronometer()
     {
-	Chronometer.this.blockPosX = 0;
+	this.blockPosX = 0;
 	this.timelineAnimations.play();
-	this.active = true;
     }
 
-    public boolean isActive()
-    {
-	return active;
-    }
-
+    /**
+     * 
+     * L'action réalisé lorsque le LineListener lance une notification.
+     * On démarre l'animation
+     * 
+     * @param line
+     *            -> la ligne sur laquelle l'animation va se dérouler.
+     */
     public void onLineCompleted(int line)
     {
 	this.line = line;

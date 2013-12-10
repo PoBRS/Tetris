@@ -1,86 +1,143 @@
+
 package tetris.backend;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Classe représentant un bloc.
+ * 
+ * @author Pierre-Olivier Boulet
+ * @author Raphaël Sylvain
+ * 
+ * @see Tetromino
+ * @see Case
+ * 
+ * @since 09/12/2013
+ */
+
 public class Block
 {
 
-	private int posX = 0;
-	private int posY = 0;
-	private boolean pivot = false;
-	private boolean fixed = false;
-	private Color colorBlock;
+    private int posX = 0;
+    private int posY = 0;
+    private boolean pivot = false;
+    private boolean fixed = false;
+    private Color colorBlock;
 
-	public Block(int posX, int posY, boolean pivot, Color colorBlock)
-	{
-		this.pivot = pivot;
-		this.setPosX(posX);
-		this.setPosY(posY);
-		this.colorBlock = colorBlock;
-	}
+    /**
+     * Constructeur de block.
+     * 
+     * @param posX
+     *            -> Position X du bloque dans le jeu.
+     * @param pos
+     *            -> Position Y du bloque dans le jeu.
+     * @param pivot
+     *            -> Si ce bloque doit être considéré comme un pivot. True s'il est un pivot.
+     * @param colorBlock
+     *            -> La couleur du bloque.
+     * 
+     */
+    public Block(int posX, int posY, boolean pivot, Color colorBlock)
+    {
+	this.pivot = pivot;
+	this.setPosX(posX);
+	this.setPosY(posY);
+	this.setColorBlock(colorBlock);
+    }
 
-	public int getPosY()
-	{
-		return this.posY;
-	}
+    /**
+     * Getter de posY
+     * 
+     * @return -> La position Y
+     */
+    public int getPosY()
+    {
+	return this.posY;
+    }
 
-	public void setPosY(int posY)
-	{
-		this.posY = posY;
-	}
+    /**
+     * Setter de posY
+     * 
+     * @param posY
+     *            -> La nouvelle position Y
+     */
+    public void setPosY(int posY)
+    {
+	this.posY = posY;
+    }
 
-	public int getPosX()
-	{
-		return this.posX;
-	}
+    /**
+     * Getter de posX
+     * 
+     * @return -> La position X
+     */
+    public int getPosX()
+    {
+	return this.posX;
+    }
 
-	public void setPosX(int posX)
-	{
-		this.posX = posX;
-	}
+    /**
+     * Setter de posX
+     * 
+     * @param posX
+     *            -> La nouvelle position X
+     */
+    public void setPosX(int posX)
+    {
+	this.posX = posX;
+    }
 
-	public void incrementPosY()
-	{
-		this.posY++;
-	}
+    /**
+     * Getter de pivot
+     * 
+     * @return -> True si le block est un pivot; False sinon.
+     */
+    public boolean isPivot()
+    {
+	return this.pivot;
+    }
 
-	public void incrementPosX()
-	{
-		this.posX++;
-	}
+    /**
+     * Getter de fixed
+     * 
+     * @return -> True si le block est fixé; False sinon.
+     */
+    public boolean isFixed()
+    {
+	return this.fixed;
+    }
 
-	public void decrementPosY()
-	{
-		this.posY--;
-	}
+    /**
+     * Setter de fixed
+     * 
+     * @param fixed
+     *            -> La nouvelle valeur de fixed.
+     */
+    public void setFixed(boolean fixed)
+    {
+	this.fixed = fixed;
+    }
 
-	public void decrementPosX()
-	{
-		this.posX--;
-	}
+    /**
+     * Getter de la couleur du block;
+     * 
+     * @return -> La couleur du block.
+     * @see Colors
+     */
+    public Color getColorBlock()
+    {
+	return this.colorBlock;
+    }
 
-	public boolean isPivot()
-	{
-		return this.pivot;
-	}
-
-	public boolean isFixed()
-	{
-		return this.fixed;
-	}
-
-	public void setFixed(boolean fixed)
-	{
-		this.fixed = fixed;
-	}
-
-	public Color getColorBlock()
-	{
-		return colorBlock;
-	}
-
-	public void setColorBlock(Color colorBlock)
-	{
-		this.colorBlock = colorBlock;
-	}
+    /**
+     * Setter de la couleur du block;
+     * 
+     * @param colorBlock
+     *            -> La nouvelle couleur du block.
+     * @see Colors
+     */
+    private void setColorBlock(Color colorBlock)
+    {
+	this.colorBlock = colorBlock;
+    }
 }

@@ -1,30 +1,38 @@
+
 package tetris.userInterface;
 
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Classe représentant l'application.
+ * 
+ * @author Pierre-Olivier Boulet
+ * @author Raphaël Sylvain
+ * 
+ * @since 09/12/2013
+ * 
+ * 
+ */
+public class PrimaryStage extends Application
+{
+    public static final String DEFAULT_TITLE = "Tetris - Raphaël Sylvain et Pierre-Olivier Boulet";
 
+    /**
+     * Fonction qui set les propriétés de le fenêtre et qui se crée une nouvelle scène.
+     */
+    public void start(Stage primaryStage)
+    {
+	primaryStage.setResizable(false);
+	primaryStage.centerOnScreen();
 
-public class PrimaryStage extends Application {
-	public static final String DEFAULT_TITLE = "Tetris - Raphaël Sylvain et Pierre-Olivier Boulet";
+	primaryStage.setTitle(DEFAULT_TITLE);
+	primaryStage.setScene(new MenuScene(primaryStage, new Group()));
 
-	public static final double DEFAULT_LOCATION_X = 200.0;
-	public static final double DEFAULT_LOCATION_Y = 30.0;
+	primaryStage.show();
+	primaryStage.sizeToScene();
 
-	public void start(Stage primaryStage) {
-		
-			primaryStage.setResizable(false);
-			primaryStage.setTitle(DEFAULT_TITLE);
-			primaryStage.setX(DEFAULT_LOCATION_X);
-			primaryStage.setY(DEFAULT_LOCATION_Y);
+    }
 
-			primaryStage.setScene(new MainScene(primaryStage, new Group()));
-			
-			primaryStage.show();
-			primaryStage.sizeToScene();
-
-
-	}
 }
