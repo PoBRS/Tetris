@@ -1,4 +1,4 @@
-package tetris.userInterface;
+package tetris.userInterface.hud;
 
 import java.io.BufferedReader;
 import java.io.File;

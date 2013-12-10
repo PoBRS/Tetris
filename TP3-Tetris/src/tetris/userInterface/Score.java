@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import tetris.backend.GameEndListener;
+import tetris.userInterface.board.MainScene;
 
 /**
  * Classe qui s'oocupe de l'enregistrement du Score.

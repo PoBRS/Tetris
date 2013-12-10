@@ -1,5 +1,5 @@
 
-package tetris.userInterface;
+package tetris.userInterface.hud;
 
 import java.io.FileNotFoundException;
 

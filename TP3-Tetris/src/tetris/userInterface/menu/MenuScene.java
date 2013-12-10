@@ -1,5 +1,5 @@
 
-package tetris.userInterface;
+package tetris.userInterface.menu;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

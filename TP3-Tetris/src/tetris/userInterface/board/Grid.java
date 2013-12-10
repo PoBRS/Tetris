@@ -1,5 +1,5 @@
 
-package tetris.userInterface;
+package tetris.userInterface.board;
 
 import java.util.ArrayList;
 

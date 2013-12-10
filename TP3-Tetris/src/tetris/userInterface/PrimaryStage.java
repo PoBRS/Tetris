@@ -1,6 +1,7 @@
 
 package tetris.userInterface;
 
+import tetris.userInterface.menu.MenuScene;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.stage.Stage;

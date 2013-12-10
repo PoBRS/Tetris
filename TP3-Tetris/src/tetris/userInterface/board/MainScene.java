@@ -1,5 +1,5 @@
 
-package tetris.userInterface;
+package tetris.userInterface.board;
 
 import java.io.File;
 
@@ -23,6 +23,11 @@ import tetris.backend.Game;
 import tetris.backend.GameEndListener;
 import tetris.backend.NewTetrominoListener;
 import tetris.backend.Tetromino;
+import tetris.userInterface.Chronometer;
+import tetris.userInterface.Score;
+import tetris.userInterface.hud.HUD;
+import tetris.userInterface.menu.HighScoreScene;
+import tetris.userInterface.menu.MenuScene;
 
 /*
  * Classe maîtresse de l'interface. Elle représente la fenêtre principale de jeu.
@@ -41,7 +46,7 @@ public class MainScene extends Scene implements NewTetrominoListener, GameEndLis
     private HUD hud;
     private Grid gameGrid;
 
-    final static String BACKGROUND_PATH = "ressources/Kremlin_Night.jpg";
+    final static String BACKGROUND_PATH = "file:ressources/Kremlin_Night.jpg";
     final static String MP3A = "ressources/TetrisA.mp3";
     final static String MP3B = "ressources/TetrisB.mp3";
     final static String MP3C = "ressources/TetrisC.mp3";
@@ -354,13 +359,13 @@ public class MainScene extends Scene implements NewTetrominoListener, GameEndLis
 	switch (theme)
 	{
 	    case 1:
-		linkTetrisMusic = new File(MainScene.MP3A).toURI().toString();
-		break;
-	    case 2:
 		linkTetrisMusic = new File(MainScene.MP3B).toURI().toString();
 		break;
-	    default:
+	    case 2:
 		linkTetrisMusic = new File(MainScene.MP3C).toURI().toString();
+		break;
+	    default:
+		linkTetrisMusic = new File(MainScene.MP3A).toURI().toString();
 		break;
 	}
 

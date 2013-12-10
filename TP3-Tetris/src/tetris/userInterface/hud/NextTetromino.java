@@ -1,5 +1,5 @@
 
-package tetris.userInterface;
+package tetris.userInterface.hud;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;

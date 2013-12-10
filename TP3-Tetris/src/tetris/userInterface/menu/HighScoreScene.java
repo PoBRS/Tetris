@@ -1,5 +1,5 @@
 
-package tetris.userInterface;
+package tetris.userInterface.menu;
 
 import java.io.BufferedReader;
 import java.io.File;

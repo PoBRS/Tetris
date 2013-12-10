@@ -1,6 +1,7 @@
 
-package tetris.userInterface;
+package tetris.userInterface.menu;
 
+import tetris.userInterface.board.MainScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

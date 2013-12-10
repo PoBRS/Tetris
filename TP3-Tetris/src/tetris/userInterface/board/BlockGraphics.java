@@ -1,5 +1,5 @@
 
-package tetris.userInterface;
+package tetris.userInterface.board;
 
 import javafx.scene.effect.Glow;
 import javafx.scene.shape.Rectangle;

@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 import tetris.backend.LineListener;
+import tetris.userInterface.board.BlockGraphics;
+import tetris.userInterface.board.MainScene;
 
 /**
  * Classe qui gère l'animation des BlockGraphics de la grille de jeu.
